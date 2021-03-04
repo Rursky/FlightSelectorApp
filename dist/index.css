@@ -1,0 +1,421 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: Roboto;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: grey;
+}
+
+
+/* WRAPPER */
+
+#wrapper {
+    max-width: 950px;
+    margin: 0 auto;
+    background-color: lightgray;
+    border: 1px solid white;
+    border-radius: 10px;
+}
+
+
+/* HEADER */
+
+header {
+    position: relative;
+}
+
+header img {
+    display: block;
+    width: 100%;
+    border-radius: 10px 10px 0px 0px;
+}
+
+#weather-text {
+    position: absolute;
+    bottom: 0px;
+    font-size: 24px;
+    padding-left: 5px;
+    background-color: grey;
+    color: white;
+    width: 25%;
+    text-align: center;
+    /* border: 1px solid crimson; */
+    border-top-left-radius: 19px;
+    border-top-right-radius: 19px;
+}
+
+.weather-text1 {
+    animation-name: driveII;
+    animation-duration: 1s;
+    /* czas trwania animacji */
+    animation-fill-mode: forwards;
+    animation-timing-function: ease;
+    animation-delay: 0s;
+    /*opóźnia start animacji*/
+    animation-iteration-count: 1;
+}
+
+@keyframes driveII {
+    from {
+        transform: scaleX(1%);
+    }
+    to {
+        transform: scaleX(100%);
+    }
+}
+
+
+/* NAV MENU */
+
+.active {
+    background-color: crimson;
+}
+
+nav {
+    overflow: hidden;
+}
+
+nav a {
+    display: block;
+    width: 25%;
+    float: left;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    background-color: grey;
+    padding: 15px 10px;
+    transition: all 1s ease;
+}
+
+nav a:hover {
+    background-color: crimson;
+    cursor: pointer;
+}
+
+
+/* SECTION */
+
+section {
+    height: 400px;
+    width: 100%;
+}
+
+
+/* FOOTER */
+
+footer {
+    height: 40px;
+    background-color: grey;
+    color: white;
+    text-align: center;
+    line-height: 40px;
+    border-radius: 0px 0px 10px 10px;
+}
+
+
+/* kontakt.html */
+
+article {
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+
+article p,
+article a {
+    text-align: center;
+    display: block;
+    padding: 10px 20px;
+    margin-top: 5px;
+}
+
+
+/* SELEKTOR */
+
+.selektor {
+    width: 30%;
+    height: 90%;
+    border-right: 1px solid grey;
+    padding-left: 40px;
+    display: block;
+    float: left;
+    margin-bottom: 30px;
+}
+
+.selektor select,
+.selektor input {
+    border: 1px solid grey;
+    outline: 1px;
+    background: grey;
+    margin-top: 5px;
+    width: 80%;
+    padding: 5px;
+    height: 30px;
+    border-radius: 3px;
+    color: white;
+    box-shadow: 6px 6px 10px -2px black;
+}
+
+.selektor label {
+    display: block;
+    color: crimson;
+    font-size: .9em;
+    margin-top: 5px;
+}
+
+#search-flight {
+    background: grey;
+    color: white;
+    padding-top: 5px;
+    margin-top: 40px;
+    width: 80%;
+    font-size: 1.2em;
+    /* display: flex; */
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: all 1s ease;
+}
+
+#search-flight:hover {
+    background: crimson;
+    border-radius: 10px;
+}
+
+select option {
+    color: white;
+    background-color: crimson;
+}
+
+
+/* Results */
+
+.results {
+    width: 70%;
+    display: block;
+    float: left;
+}
+
+table {
+    width: 100%;
+    padding: 2%;
+    text-align: center;
+    margin-top: 15px;
+}
+
+td {
+    width: 20%;
+    color: black;
+    /* border: 1px solid black; */
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    display: block;
+    float: left;
+}
+
+td input {
+    background: grey;
+    color: white;
+    width: 100%;
+    font-size: 1.2em;
+    padding: 5px;
+    /* display: flex; */
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: all 1s ease;
+    border: none;
+}
+
+td input:hover {
+    background: crimson;
+    border-radius: 10px;
+}
+
+#form-icon {
+    font-size: 80px;
+}
+
+
+/* LOADING LOTÓW ANIMACJA */
+
+#loading {
+    font-size: 50px;
+    padding-top: 20%;
+    animation-name: driveI;
+    animation-duration: 0.7s;
+    /* czas trwania animacji */
+    /* animation-fill-mode: forwards; */
+    animation-timing-function: ease;
+    animation-delay: 0s;
+    /*opóźnia start animacji*/
+    animation-iteration-count: 4;
+    font-size: 15px;
+}
+
+@keyframes driveI {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+/* popup (NIE RUSZAĆ - UKOŃCZONE) */
+
+.popup {
+    position: absolute;
+    top: -150%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1.15);
+    width: 300px;
+    height: 440px;
+    background: #f5f5f5;
+    z-index: 2;
+    opacity: 0;
+    box-shadow: 5px 5px 3px rgba(0, 0, 0, 0.2);
+    transition: transform 300ms ease-in-out, opacity 300ms ease-in-out;
+}
+
+body.showLoginForm .popup-overlay {
+    display: block;
+}
+
+body.showLoginForm .popup {
+    top: 50%;
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.popup .popup-close {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    width: 40px;
+    height: 40px;
+    background: #555;
+    color: #f5f5f5;
+    font-size: 25px;
+    font-weight: 600;
+    text-align: center;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.popup .form .avatar {
+    margin: 30px 0px 20px;
+    text-align: center;
+}
+
+.popup .form .avatar img {
+    width: 120px;
+    border-radius: 50%;
+}
+
+.popup .form .header {
+    text-align: center;
+    font-size: 20px;
+    font-weight: 600;
+    color: #222;
+    margin: 20px 0px;
+}
+
+.popup .form .element {
+    padding: 8px 20px;
+}
+
+.popup .form .element label {
+    display: block;
+    font-size: 14px;
+    color: #222;
+    margin-bottom: 5px;
+}
+
+.popup .form .element input {
+    width: 100%;
+    padding: 8px 10px;
+    box-sizing: border-box;
+    outline: none;
+    border: 1px solid #aaa;
+    background: #eee;
+    border-radius: 5px;
+}
+
+.wrongpassword {
+    border: 1px solid red !important;
+}
+
+.popup .form .element button {
+    margin-top: 5px;
+    width: 100%;
+    padding: 10px 0px;
+    text-transform: uppercase;
+    outline: none;
+    border: none;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 5px;
+    cursor: pointer;
+    background: crimson;
+    color: #f5f5f5;
+}
+
+
+/* MEDIA QUERIES */
+
+@media (max-width: 800px) {
+    nav a {
+        width: 50%;
+        padding: 8px 8px;
+    }
+    #weather-text {
+        font-size: 25px;
+        width: 50%;
+    }
+    #search-flight {
+        font-size: 18px;
+    }
+    td input {
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 550px) {
+    nav a {
+        width: 25%;
+        padding: 4px 4px;
+    }
+    nav {
+        position: fixed;
+        top: 0px;
+        width: 100%;
+        border-bottom: 2px solid black;
+    }
+    header {
+        display: none;
+    }
+    #weather-text {
+        font-size: 18px;
+        width: 100%;
+    }
+    #search-flight {
+        font-size: 14px;
+    }
+    td input {
+        font-size: 12px;
+    }
+    .selektor label {
+        font-size: .75em;
+    }
+    .results {
+        width: 100%;
+    }
+    .selektor {
+        width: 100%;
+    }
+}

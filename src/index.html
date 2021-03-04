@@ -1,0 +1,143 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wyszukiwarka lotów</title>
+    <script src="https://kit.fontawesome.com/3dc5e43f77.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!-- BUTTONY DEV NIE RUSZAĆ -->
+    <div class="developer_window">
+        <p>developer window</p>
+        <button id="testbtn">zmienna</button>
+        <button id="testbtn1">check-loginy</button>
+        <button id="testbtn2">check2-hasła</button>
+    </div>
+
+    <!-- <input type="button" id="abcd" value="WYBIERZ" /> -->
+    <div id="wrapper">
+        <header>
+            <img src="https://www.fkitparties.com/wp-content/uploads/2015/10/flights-header-fk-it-wildstyle-travel.jpg" alt="flight-slider">
+            <p id="weather-text"></p>
+        </header>
+
+        <nav>
+            <a class="menu active" href="index.html">Wyszukaj lot</a>
+            <a class="menu" href="kontakt.html">Kontakt</a>
+            <a class="menu" id="register">Zarejestruj</a>
+            <a class="menu" id="login">Zaloguj</a>
+        </nav>
+
+        <section>
+
+            <article>
+
+                <div class="selektor">
+                    <form>
+                        <label for="town1">Miejsce wylotu</label>
+                        <select name="town" id="town1" class="townSelect" required>
+                            <option value="" disabled selected>Wybierz miasto:</option>
+                            <option value="Katowice">Katowice</option>
+                        </select>
+
+                        <label for="town2">Miejsce przylotu</label>
+                        <select name="town" id="town2" class="townSelect" required>
+                            <option value="" disabled selected>Wybierz miasto:</option>
+                            <option value="Warszawa">Warszawa</option>
+                            <option value="Paryż">Paryż</option>
+                            <option value="Nowy Jork">Nowy Jork</option>
+                        </select>
+
+                        <label for="leave-date">Data wylotu</label>
+                        <input type="date" id="leave-date" class="townSelect" required>
+
+                        <label for="adults">Liczba osób</label>
+                        <select name="adults" id="adults" required>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        </select>
+
+                        <input type="button" id="search-flight" value="SZUKAJ" />
+                    </form>
+                </div>
+                <div id="results1" class="results">
+                    <table id="table-flight">
+                        <p>WYPEŁNIJ FORMULARZ I NACIŚNIJ "SZUKAJ"</p>
+                        <p id="form-icon"><i class="fas fa-align-justify"></i></p>
+                        <!-- <tr><td>Z</td> <td>Do</td> <td>Wylot</td> <td>Przylot</td> <td>Bilet</td></tr> -->
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <p id="abcd"></p>
+                            </td>
+                        </tr>
+                    </table>`
+                </div>
+
+            </article>
+
+        </section>
+
+        <!-- LOGIN POPUP -->
+        <div class="popup">
+            <div class="popup-close">&times;</div>
+            <div class="form">
+                <div class="popup-avatar">
+                    <img src="/img/login-icon1.svg" alt="login-icon">
+                </div>
+                <div class="popup-header">
+                    Zaloguj się
+                </div>
+                <div class="popup-element">
+                    <label for="username">Użytkownik</label>
+                    <input id="popup-username" type="text" id="username">
+                </div>
+                <div class="popup-element">
+                    <label for="password">Hasło</label>
+                    <input id="popup-password" type="password" id="password">
+                </div>
+                <div class="popup-element">
+                    <button id="popup-login-btn">Login</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Register POPUP -->
+        <div id="popup-register" class="popup">
+            <div id="register-popup-close" class="popup-close">&times;</div>
+            <div class="form">
+                <div class="popup-avatar">
+                    <img src="/img/register-icon.svg" alt="login-icon">
+                </div>
+                <div class="popup-header">
+                    Zarejestruj się
+                </div>
+                <div class="popup-element">
+                    <label for="username">Użytkownik</label>
+                    <input type="text" id="username1">
+                </div>
+                <div class="popup-element">
+                    <label for="password">Hasło</label>
+                    <input type="password" id="password1">
+                </div>
+                <div class="popup-element">
+                    <button id="popup-register-btn">Zarejestruj</button>
+                </div>
+            </div>
+        </div>
+
+        <footer>Tanieloty All rights reserved 2021</footer>
+    </div>
+
+    <!-- <script src="bundle.js"></script> -->
+</body>
+
+</html>
