@@ -2,6 +2,14 @@ import style from "./css/index.scss";
 
 /////////////// Developer window
 
+document.querySelector("#devbtn").addEventListener("click", () => {
+    if (document.querySelector(".developer_window").classList.contains("showdevwindow")) {
+        document.querySelector(".developer_window").classList.remove("showdevwindow")
+    } else {
+        document.querySelector(".developer_window").classList.add("showdevwindow")
+    }
+})
+
 document.getElementById("testbtn").addEventListener("click", () => {
     alert(user_verification)
 });
@@ -25,7 +33,7 @@ let user_verification = false
 document.getElementById("popup-register-btn").addEventListener("click", () => {
     for (let k = 0; k < 1; k++) {
         if (document.getElementById("username1").value == "" || document.getElementById("password1").value == "") {
-            alert("Żadne z pól nie moze byc puste")
+            alert("Żadne z pól nie moze byc puste.")
         } else {
             for (let i = 0; i < user1.length; i++) {
                 if (document.getElementById("username1").value == user1[i]) {
@@ -33,12 +41,11 @@ document.getElementById("popup-register-btn").addEventListener("click", () => {
                 }
             }
             if (user_verification == true) {
-                alert("Użytkownik istnieje w bazie. Podaj inną nazwę")
+                alert("Użytkownik istnieje w bazie. Podaj inną nazwę.")
                 user_verification = false
                 document.getElementById("username1").value = "" // czyszczenie okienek username po podaniu istniejacego usera
                 document.getElementById("password1").value = "" // czyszczenie okienek password po podaniu istniejacego usera
             } else if (user_verification == false) {
-                // alert("user NIE istnieje")
                 user_verification1 = true
             }
         }
@@ -48,7 +55,7 @@ document.getElementById("popup-register-btn").addEventListener("click", () => {
         password1.push(document.getElementById("password1").value)
         user_verification1 = false
         closeRegisterForm()
-        alert("zarejestrowano Cie")
+        alert("Zarejestrowano Cię.")
         document.getElementById("username1").value = "" // czyszczenie okienek username po zarejestrowniu
         document.getElementById("password1").value = "" // czyszczenie okienek password po zarejestrowaniu
     }
@@ -107,7 +114,7 @@ document.getElementById("login").addEventListener("click", () => {
         openLoginForm()
         resolve()
     } else if (login_valid == true) {
-        alert("wylogowano")
+        alert("Zostałeś wylogowany")
         document.getElementById("login").innerText = `Zaloguj`
         login_valid = false;
     }
@@ -126,7 +133,7 @@ document.getElementById("popup-login-btn").addEventListener("click", () => {
         }
     }
     if (login_valid_inner == true) {
-        alert("Zalogowany pomyślnie")
+        alert(`Cześć ${document.getElementById("popup-username").value}! Zostałeś zalogowany.`)
         resolve()
     } else if (login_valid_inner == false) {
         document.getElementById("popup-username").classList.add("wrongpassword")
@@ -146,11 +153,11 @@ document.getElementById("search-flight").addEventListener("click", makeFly)
 const valid_data = () => { // obsługa braku wyboru w formularzu tj zostawienie pustych okienek
     return new Promise((resolve, reject) => {
         if (document.getElementById("town1").value == "") {
-            alert("Podaj miasto wylotu")
+            alert("Podaj miasto wylotu.")
         } else if (document.getElementById("town2").value == "") {
-            alert("Podaj miasto przylotu")
+            alert("Podaj miasto przylotu.")
         } else if (document.getElementById("leave-date").value == "") {
-            alert("Podaj date wylotu")
+            alert("Podaj date wylotu.")
         } else {
             resolve()
         }
@@ -160,7 +167,7 @@ const valid_data = () => { // obsługa braku wyboru w formularzu tj zostawienie 
 const valid_date_put_weather = () => { // obsługa błędu wyboru daty wcześniejszej niż aktualna oraz dodanie "widgetu" pogody dla miasta wylotu (1 miasto w aplikacji, lecz konstrukcja promisa do obsługi wielu)
     return new Promise((resolve, reject) => {
         if (document.getElementById("leave-date").value < today) {
-            alert("Wybierz aktualną datę")
+            alert("Wybierz aktualną datę.")
         } else {
             fetch(`https:api.openweathermap.org/data/2.5/forecast?q=${document.getElementById("town1").value}&appid=3865d70b9f135bc376b8beb376bb474b`)
                 .then(resp => resp.json())
@@ -176,7 +183,7 @@ const valid_date_put_weather = () => { // obsługa błędu wyboru daty wcześnie
 const put_flight = () => {
     return new Promise((resolve, reject) => {
         if (login_valid == false) {
-            alert("Nie jesteś Zalogowany! Możesz wybrać lot dopiero PO ZALOGOWANIU")
+            alert("Nie jesteś Zalogowany! Możesz wybrać lot dopiero PO ZALOGOWANIU.")
         }
         document.querySelector(".results").innerHTML = `<p>LOADING...</p><p id="loading"><i class="fas fa-circle"></i></p>`
         setTimeout(() => {

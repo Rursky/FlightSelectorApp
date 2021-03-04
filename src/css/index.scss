@@ -11,12 +11,22 @@ body {
 
 // developer window for tests
 .developer_window {
+    display: none;
     position: fixed;
     border: 2px solid red;
     z-index: 30;
     p {
         color: lightblue;
     }
+}
+
+.showdevwindow {
+    display: block;
+}
+
+#devbtn {
+    position: fixed;
+    top: 45px;
 }
 
 
