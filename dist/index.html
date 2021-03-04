@@ -10,24 +10,12 @@
 
 <body>
     <!-- BUTTONY DEV NIE RUSZAĆ -->
+    <button id="devbtn">DevWindow</button>
     <div class="developer_window">
         <p>developer window</p>
-        <button id="testbtn">check</button>
-        <button id="testbtn1">check1</button>
-        <button id="testbtn2">check2</button>
-        <div class="element">
-            <label for="username1">Użytkownik</label>
-            <input type="text" id="username1">
-
-        </div>
-        <div class="element">
-            <label for="password1">Hasło</label>
-            <input type="password" id="password1">
-
-        </div>
-        <div class="element">
-            <button id="popup-register-btn">Zaejestruj</button>
-        </div>
+        <button id="testbtn">zmienna</button>
+        <button id="testbtn1">check-loginy</button>
+        <button id="testbtn2">check2-hasła</button>
     </div>
 
     <!-- <input type="button" id="abcd" value="WYBIERZ" /> -->
@@ -40,7 +28,7 @@
         <nav>
             <a class="menu active" href="index.html">Wyszukaj lot</a>
             <a class="menu" href="kontakt.html">Kontakt</a>
-            <a class="menu" href="zarejestruj.html">Zarejestruj</a>
+            <a class="menu" id="register">Zarejestruj</a>
             <a class="menu" id="login">Zaloguj</a>
         </nav>
 
@@ -104,7 +92,7 @@
             <div class="popup-close">&times;</div>
             <div class="form">
                 <div class="popup-avatar">
-                    <img src="/img/login-icon.svg" alt="login-icon">
+                    <img src="/img/login-icon1.svg" alt="login-icon">
                 </div>
                 <div class="popup-header">
                     Zaloguj się
@@ -124,25 +112,25 @@
         </div>
 
         <!-- Register POPUP -->
-        <div class="popup">
-            <div class="popup-close">&times;</div>
+        <div id="popup-register" class="popup">
+            <div id="register-popup-close" class="popup-close">&times;</div>
             <div class="form">
                 <div class="popup-avatar">
-                    <img src="/img/login-icon.svg" alt="login-icon">
+                    <img src="/img/register-icon.svg" alt="login-icon">
                 </div>
                 <div class="popup-header">
-                    Zaloguj się
+                    Zarejestruj się
                 </div>
                 <div class="popup-element">
                     <label for="username">Użytkownik</label>
-                    <input id="popup-username" type="text" id="username">
+                    <input type="text" id="username1">
                 </div>
                 <div class="popup-element">
                     <label for="password">Hasło</label>
-                    <input id="popup-password" type="password" id="password">
+                    <input type="password" id="password1">
                 </div>
                 <div class="popup-element">
-                    <button id="popup-login-btn">Login</button>
+                    <button id="popup-register-btn">Zarejestruj</button>
                 </div>
             </div>
         </div>
