@@ -200,7 +200,7 @@ const confirm_flight_and_login = () => {
 
 const login_error = () => {
     return new Promise((resolve, reject) => {
-        document.querySelector(".results").innerHTML = "Wyszukaj ponownie lot"
+        document.querySelector(".results").innerHTML = "<p>Wyszukaj ponownie lot po zalogowaniu</p>"
         openLoginForm()
             // resolve()
     })
