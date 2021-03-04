@@ -33,8 +33,10 @@ document.getElementById("popup-register-btn").addEventListener("click", () => {
                 }
             }
             if (user_verification == true) {
-                alert("user istnieje")
+                alert("Użytkownik istnieje w bazie. Podaj inną nazwę")
                 user_verification = false
+                document.getElementById("username1").value = "" // czyszczenie okienek username po podaniu istniejacego usera
+                document.getElementById("password1").value = "" // czyszczenie okienek password po podaniu istniejacego usera
             } else if (user_verification == false) {
                 // alert("user NIE istnieje")
                 user_verification1 = true
@@ -47,6 +49,8 @@ document.getElementById("popup-register-btn").addEventListener("click", () => {
         user_verification1 = false
         closeRegisterForm()
         alert("zarejestrowano Cie")
+        document.getElementById("username1").value = "" // czyszczenie okienek username po zarejestrowniu
+        document.getElementById("password1").value = "" // czyszczenie okienek password po zarejestrowaniu
     }
 });
 
@@ -54,9 +58,6 @@ document.querySelector("#register-popup-close").addEventListener("click", closeR
 
 
 //////////////// LOGIN DANE UZYTKOWANIA ROZWIAZANIE TYMCZASOWE
-
-let login_valid_inner = false
-let login_valid = false
 
 const user1 = ["tanieloty", "tanieloty1", "tanieloty2"]
 const password1 = ["admin", "admin1", "admin2"]
@@ -95,6 +96,9 @@ var yyyy = today.getFullYear();
 today = yyyy + '-' + mm + '-' + dd;
 
 ///////////////// Obsługa zaloguj - event listener
+
+let login_valid_inner = false
+let login_valid = false
 
 document.getElementById("login").addEventListener("click", () => {
     if (login_valid == false) {
@@ -171,6 +175,9 @@ const valid_date_put_weather = () => { // obsługa błędu wyboru daty wcześnie
 
 const put_flight = () => {
     return new Promise((resolve, reject) => {
+        if (login_valid == false) {
+            alert("Nie jesteś Zalogowany! Możesz wybrać lot dopiero PO ZALOGOWANIU")
+        }
         document.querySelector(".results").innerHTML = `<p>LOADING...</p><p id="loading"><i class="fas fa-circle"></i></p>`
         setTimeout(() => {
             if (document.getElementById("town2").value == "Warszawa") {
