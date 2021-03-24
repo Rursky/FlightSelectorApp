@@ -428,10 +428,23 @@ td input:hover {
     .selektor label {
         font-size: .75em;
     }
+    /// poniżej do poprawienia weersja mobilna
     .results {
+        display: block;
         width: 100%;
+        height: 200px
     }
     .selektor {
+        display: block;
         width: 100%;
+        height: 300px
+    }
+    section {
+        height: 600px;
+        width: 100%;
+    }
+    #login {
+        height: 27px;
+        overflow: auto;
     }
 }

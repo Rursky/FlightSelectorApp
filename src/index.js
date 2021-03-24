@@ -64,7 +64,7 @@ document.getElementById("popup-register-btn").addEventListener("click", () => {
 document.querySelector("#register-popup-close").addEventListener("click", closeRegisterForm)
 
 
-//////////////// LOGIN DANE UZYTKOWANIA ROZWIAZANIE TYMCZASOWE
+//////////////// LOGIN DANE UZYTKOWANIA
 
 const user1 = ["tanieloty", "tanieloty1", "tanieloty2"]
 const password1 = ["admin", "admin1", "admin2"]
@@ -180,6 +180,25 @@ const valid_date_put_weather = () => { // obsługa błędu wyboru daty wcześnie
     })
 }
 
+// const put_flight = () => {
+//     return new Promise((resolve, reject) => {
+//         if (login_valid == false) {
+//             alert("Nie jesteś Zalogowany! Możesz wybrać lot dopiero PO ZALOGOWANIU.")
+//         }
+//         document.querySelector(".results").innerHTML = `<p>LOADING...</p><p id="loading"><i class="fas fa-circle"></i></p>`
+//         setTimeout(() => {
+//             if (document.getElementById("town2").value == "Warszawa") {
+//                 document.querySelector(".results").innerHTML = `<table><tr><td>Z</td> <td>Do</td> <td>Wylot</td> <td>Przylot</td> <td>Bilet</td></tr><tr><td>${document.getElementById("town1").value}</td> <td>${document.getElementById("town2").value}</td> <td>8:23</td> <td>9:37</td> <td><input type="button" id="abcd" value="WYBIERZ"/></td></tr></table>`
+//             } else if (document.getElementById("town2").value == "Paryż") {
+//                 document.querySelector(".results").innerHTML = `<table><tr><td>Z</td> <td>Do</td> <td>Wylot</td> <td>Przylot</td> <td>Bilet</td></tr><tr><td>${document.getElementById("town1").value}</td> <td>${document.getElementById("town2").value}</td> <td>9:29</td> <td>11:17</td> <td><input type="button" id="abcd" value="WYBIERZ"/></td></tr></table>`
+//             } else if (document.getElementById("town2").value == "Nowy Jork") {
+//                 document.querySelector(".results").innerHTML = `<table><tr><td>Z</td> <td>Do</td> <td>Wylot</td> <td>Przylot</td> <td>Bilet</td></tr><tr><td>${document.getElementById("town1").value}</td> <td>${document.getElementById("town2").value}</td> <td>5:29</td> <td>16:17</td> <td><input type="button" id="abcd" value="WYBIERZ"/></td></tr></table>`
+//             }
+//             resolve()
+//         }, 1200);
+//     })
+// }
+
 const put_flight = () => {
     return new Promise((resolve, reject) => {
         if (login_valid == false) {
@@ -187,14 +206,35 @@ const put_flight = () => {
         }
         document.querySelector(".results").innerHTML = `<p>LOADING...</p><p id="loading"><i class="fas fa-circle"></i></p>`
         setTimeout(() => {
-            if (document.getElementById("town2").value == "Warszawa") {
-                document.querySelector(".results").innerHTML = `<table><tr><td>Z</td> <td>Do</td> <td>Wylot</td> <td>Przylot</td> <td>Bilet</td></tr><tr><td>${document.getElementById("town1").value}</td> <td>${document.getElementById("town2").value}</td> <td>8:23</td> <td>9:37</td> <td><input type="button" id="abcd" value="WYBIERZ"/></td></tr></table>`
-            } else if (document.getElementById("town2").value == "Paryż") {
-                document.querySelector(".results").innerHTML = `<table><tr><td>Z</td> <td>Do</td> <td>Wylot</td> <td>Przylot</td> <td>Bilet</td></tr><tr><td>${document.getElementById("town1").value}</td> <td>${document.getElementById("town2").value}</td> <td>9:29</td> <td>11:17</td> <td><input type="button" id="abcd" value="WYBIERZ"/></td></tr></table>`
-            } else if (document.getElementById("town2").value == "Nowy Jork") {
-                document.querySelector(".results").innerHTML = `<table><tr><td>Z</td> <td>Do</td> <td>Wylot</td> <td>Przylot</td> <td>Bilet</td></tr><tr><td>${document.getElementById("town1").value}</td> <td>${document.getElementById("town2").value}</td> <td>5:29</td> <td>16:17</td> <td><input type="button" id="abcd" value="WYBIERZ"/></td></tr></table>`
+            let cityStart = "" // Zamiana nazwy miasta na symbol lotniska
+            if (document.getElementById("town1").value == "Warszawa") {
+                cityStart = "WAW-sky"
             }
-            resolve()
+            let cityEnd = "" // Zamiana nazwy miasta na symbol lotniska
+            if (document.getElementById("town2").value == "Katowice") {
+                cityEnd = "KTW-sky"
+            } else if (document.getElementById("town2").value == "Paryż") {
+                cityEnd = "PARI-sky"
+            } else if (document.getElementById("town2").value == "Nowy Jork") {
+                cityEnd = "JFK-sky"
+            }
+            fetch(`https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/PL/PLN/en-US/${cityStart}/${cityEnd}/${document.getElementById("leave-date").value}?inboundpartialdate=anytime`, {
+                    "method": "GET",
+                    "headers": {
+                        "x-rapidapi-key": "f7f8324186mshd96928fd91e60f4p14b669jsn40ed176a2005",
+                        "x-rapidapi-host": "skyscanner-skyscanner-flight-search-v1.p.rapidapi.com"
+                    }
+                })
+                .then((resp) => resp.json()) //mówimy, ze pobrane dane to JSON
+                .then(function(data) { //data = pobrane dane
+                    console.log(data)
+                    if (data.Carriers[0] == undefined) { // jeżeli w tym dniu nie bedzie lotu APi nie wygeneruje data.Carriers[0] i pokaże komunikat
+                        document.querySelector(".results").innerHTML = `<p>Nie znaleziono lotu w tym dniu. Wybierz inną datę.</p>`
+                    } else {
+                        document.querySelector(".results").innerHTML = `<table><tr><td>Z > Do</td> <td>Przewoźnik</td> <td>Wylot > Przylot</td> <td>Cena(${document.getElementById("adults").value} osób)</td> <td>Bilet</td></tr><tr><td>${document.getElementById("town1").value}<br>v<br>${document.getElementById("town2").value}</td> <td>${data.Carriers[0].Name}</td> <td>8:23 <br>v<br> 9:27</td> <td>${data.Quotes[0].MinPrice *document.getElementById("adults").value} PLN</td> <td><input type="button" id="abcd" value="KUP"/></td></tr></table>`
+                        resolve()
+                    }
+                })
         }, 1200);
     })
 }
