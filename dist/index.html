@@ -27,7 +27,7 @@
 
         <nav>
             <a class="menu active" href="index.html">Wyszukaj lot</a>
-            <a class="menu" href="kontakt.html">Kontakt</a>
+            <a class="menu" id="contact">Kontakt</a>
             <a class="menu" id="register">Zarejestruj</a>
             <a class="menu" id="login">Zaloguj</a>
         </nav>
@@ -41,13 +41,13 @@
                         <label for="town1">Miejsce wylotu</label>
                         <select name="town" id="town1" class="townSelect" required>
                             <option value="" disabled selected>Wybierz miasto:</option>
-                            <option value="WAW-sky">Warszawa</option>
+                            <option value="Warszawa">Warszawa</option>
                         </select>
 
                         <label for="town2">Miejsce przylotu</label>
                         <select name="town" id="town2" class="townSelect" required>
                             <option value="" disabled selected>Wybierz miasto:</option>
-                            <option value="KTW-sky">Katowice</option>
+                            <option value="Katowice">Katowice</option>
                             <option value="Paryż">Paryż</option>
                             <option value="Nowy Jork">Nowy Jork</option>
                         </select>
@@ -132,6 +132,11 @@
                 <div class="popup-element">
                     <button id="popup-register-btn">Zarejestruj</button>
                 </div>
+            </div>
+
+            <div id="popup-contact" class="popup">
+                <div id="contact-popup-close" class="popup-close">&times;</div>
+
             </div>
         </div>
 

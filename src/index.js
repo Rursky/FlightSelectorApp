@@ -180,31 +180,12 @@ const valid_date_put_weather = () => { // obsługa błędu wyboru daty wcześnie
     })
 }
 
-// const put_flight = () => {
-//     return new Promise((resolve, reject) => {
-//         if (login_valid == false) {
-//             alert("Nie jesteś Zalogowany! Możesz wybrać lot dopiero PO ZALOGOWANIU.")
-//         }
-//         document.querySelector(".results").innerHTML = `<p>LOADING...</p><p id="loading"><i class="fas fa-circle"></i></p>`
-//         setTimeout(() => {
-//             if (document.getElementById("town2").value == "Warszawa") {
-//                 document.querySelector(".results").innerHTML = `<table><tr><td>Z</td> <td>Do</td> <td>Wylot</td> <td>Przylot</td> <td>Bilet</td></tr><tr><td>${document.getElementById("town1").value}</td> <td>${document.getElementById("town2").value}</td> <td>8:23</td> <td>9:37</td> <td><input type="button" id="abcd" value="WYBIERZ"/></td></tr></table>`
-//             } else if (document.getElementById("town2").value == "Paryż") {
-//                 document.querySelector(".results").innerHTML = `<table><tr><td>Z</td> <td>Do</td> <td>Wylot</td> <td>Przylot</td> <td>Bilet</td></tr><tr><td>${document.getElementById("town1").value}</td> <td>${document.getElementById("town2").value}</td> <td>9:29</td> <td>11:17</td> <td><input type="button" id="abcd" value="WYBIERZ"/></td></tr></table>`
-//             } else if (document.getElementById("town2").value == "Nowy Jork") {
-//                 document.querySelector(".results").innerHTML = `<table><tr><td>Z</td> <td>Do</td> <td>Wylot</td> <td>Przylot</td> <td>Bilet</td></tr><tr><td>${document.getElementById("town1").value}</td> <td>${document.getElementById("town2").value}</td> <td>5:29</td> <td>16:17</td> <td><input type="button" id="abcd" value="WYBIERZ"/></td></tr></table>`
-//             }
-//             resolve()
-//         }, 1200);
-//     })
-// }
-
 const put_flight = () => {
     return new Promise((resolve, reject) => {
         if (login_valid == false) {
-            alert("Nie jesteś Zalogowany! Możesz wybrać lot dopiero PO ZALOGOWANIU.")
+            alert("Nie jesteś Zalogowany! Możesz kupić bilet dopiero PO ZALOGOWANIU.")
         }
-        document.querySelector(".results").innerHTML = `<p>LOADING...</p><p id="loading"><i class="fas fa-circle"></i></p>`
+        document.querySelector(".results").innerHTML = `<p>SZUKAM LOTÓW...</p><p id="loading"><i class="fas fa-circle"></i></p>`
         setTimeout(() => {
             let cityStart = "" // Zamiana nazwy miasta na symbol lotniska
             if (document.getElementById("town1").value == "Warszawa") {
@@ -231,7 +212,7 @@ const put_flight = () => {
                     if (data.Carriers[0] == undefined) { // jeżeli w tym dniu nie bedzie lotu APi nie wygeneruje data.Carriers[0] i pokaże komunikat
                         document.querySelector(".results").innerHTML = `<p>Nie znaleziono lotu w tym dniu. Wybierz inną datę.</p>`
                     } else {
-                        document.querySelector(".results").innerHTML = `<table><tr><td>Z > Do</td> <td>Przewoźnik</td> <td>Wylot > Przylot</td> <td>Cena(${document.getElementById("adults").value} osób)</td> <td>Bilet</td></tr><tr><td>${document.getElementById("town1").value}<br>v<br>${document.getElementById("town2").value}</td> <td>${data.Carriers[0].Name}</td> <td>8:23 <br>v<br> 9:27</td> <td>${data.Quotes[0].MinPrice *document.getElementById("adults").value} PLN</td> <td><input type="button" id="abcd" value="KUP"/></td></tr></table>`
+                        document.querySelector(".results").innerHTML = `<table id="table-flight1"><tr><td>Z > Do</td> <td>Przewoźnik</td> <td>Wylot > Przylot</td> <td>Cena(${document.getElementById("adults").value} osób)</td> <td>Bilet</td></tr><tr><td>${document.getElementById("town1").value}<br>v<br>${document.getElementById("town2").value}</td> <td>${data.Carriers[0].Name}</td> <td>8:23 <br>v<br> 9:27</td> <td>${data.Quotes[0].MinPrice *document.getElementById("adults").value} PLN</td> <td><input type="button" id="abcd" value="KUP"/></td></tr></table>`
                         resolve()
                     }
                 })
@@ -263,7 +244,22 @@ const login_error = () => {
 
 const login_btn = () => {
     return new Promise((resolve, reject) => {
-        alert("doszło")
+        // alert("doszło")
+        document.querySelector(".results").innerHTML = `<div id=testtest></div>`
+        for (let i = 0; i < document.getElementById("adults").value; i++) {
+            let fff = document.createElement('p')
+            document.getElementById("testtest").appendChild(fff)
+            fff.innerText = `Osoba ${i+1}`
+            let ggg = document.createElement('select')
+            document.getElementById("testtest").appendChild(ggg)
+            ggg.setAttribute("id", `div${i}`);
+            for (let l = 0; l < 8; l++) {
+                let hhh = document.createElement('option')
+                hhh.innerText = `${l+1}`
+                document.getElementById(`div${i}`).appendChild(hhh)
+                hhh.setAttribute("value", `${l}`);
+            }
+        }
         resolve()
     })
 }

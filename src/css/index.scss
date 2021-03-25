@@ -285,6 +285,30 @@ td input:hover {
     }
 }
 
+// wyniki wyszukiwania
+#table-flight1 {
+    border: 1px solid crimson;
+    margin: 5px;
+    padding: 0px;
+    width: 99%;
+    border-radius: 15px;
+    background-color: whitesmoke;
+}
+
+// wyniki wyszukiwania czesc 2
+#testtest {
+    width: 30%;
+    text-align: center;
+}
+
+#testtest p,
+#testtest select {
+    // justify-content: center;
+    // align-items: center;
+    // align-content: center;
+    // text-align: center;
+}
+
 
 /* popup (NIE RUSZAĆ - UKOŃCZONE) */
 
@@ -410,10 +434,15 @@ td input:hover {
         position: fixed;
         top: 0px;
         width: 100%;
-        border-bottom: 2px solid black;
+        border-bottom: 1px solid white;
+        border-radius: 10px 10px 0px 0px;
     }
     header {
-        display: none;
+        // display: none;
+        top: 26px;
+    }
+    header img {
+        border-radius: 0px 0px 0px 0px;
     }
     #weather-text {
         font-size: 18px;
