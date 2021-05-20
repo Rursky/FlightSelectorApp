@@ -213,21 +213,22 @@ const put_flight = () => {
                         document.querySelector(".results").innerHTML = `<p>Nie znaleziono lotu w tym dniu. Wybierz inną datę.</p>`
                     } else {
                         document.querySelector(".results").innerHTML = `<table id="table-flight1"><tr><td>Z > Do</td> <td>Przewoźnik</td> <td>Wylot > Przylot</td> <td>Cena(${document.getElementById("adults").value} osób)</td> <td>Bilet</td></tr><tr><td>${document.getElementById("town1").value}<br>v<br>${document.getElementById("town2").value}</td> <td>${data.Carriers[0].Name}</td> <td>8:23 <br>v<br> 9:27</td> <td>${data.Quotes[0].MinPrice *document.getElementById("adults").value} PLN</td> <td><input type="button" id="abcd" value="KUP"/></td></tr></table>`
-                        resolve()
+                        const flight_price = data.Quotes[0].MinPrice * document.getElementById("adults").value
+                        resolve(flight_price)
                     }
                 })
         }, 1200);
     })
 }
 
-const confirm_flight_and_login = () => {
+const confirm_flight_and_login = (flight_price) => {
     return new Promise((resolve, reject) => {
         document.getElementById("abcd").addEventListener("click", () => {
             if (login_valid == false) {
                 reject()
             } else if (login_valid == true) {
                 // login_checker = true
-                resolve()
+                resolve(flight_price)
             }
         })
     })
@@ -241,39 +242,40 @@ const login_error = () => {
     })
 }
 
-
-const login_btn = () => {
+const login_btn = (flight_price) => {
     return new Promise((resolve, reject) => {
-        // alert("doszło")
-        document.querySelector(".results").innerHTML = `<div id=testtest></div>`
-        for (let i = 0; i < document.getElementById("adults").value; i++) {
-            let fff = document.createElement('p')
-            document.getElementById("testtest").appendChild(fff)
-            fff.innerText = `Osoba ${i+1}`
-            let ggg = document.createElement('select')
-            document.getElementById("testtest").appendChild(ggg)
-            ggg.setAttribute("id", `div${i}`);
-            for (let l = 0; l < 8; l++) {
-                let hhh = document.createElement('option')
-                hhh.innerText = `${l+1}`
-                document.getElementById(`div${i}`).appendChild(hhh)
-                hhh.setAttribute("value", `${l}`);
-            }
-        }
+        document.querySelector(".results").innerHTML = `<select name="currency" id="currency" class="currencySelect">
+                <option value="" disabled selected>Wybierz walutę:</option>
+                <option value="eur">EUR</option>
+                <option value="chf">PLN</option>
+                <option value="usd" selected>USD</option></select>
+                <a id="output_price">Cena biletu: ${flight_price} PLN </a>
+                <a id="output_price1">Bagaż podręczny: 0 PLN </a>
+                <a id="output_price2">Bagaż dodatkowy: X </a>`
+        currency.addEventListener("change", function() {
+            fetch(`http://api.nbp.pl/api/exchangerates/rates/a/${document.getElementById("currency").value}/?format=json`)
+                .then((resp) => resp.json())
+                .then(function(data) {
+                    if (document.getElementById("currency").value == "eur") {
+                        document.getElementById("output_price").innerHTML = `Cena biletu: ${(flight_price / data.rates[0].mid.toFixed(2)).toFixed(0)} EUR`
+                        document.getElementById("output_price1").innerHTML = `Bagaż podręczny: 0 EUR`
+                    } else if (document.getElementById("currency").value == "usd") {
+                        document.getElementById("output_price").innerHTML = `Cena biletu: ${(flight_price / data.rates[0].mid.toFixed(2)).toFixed(0)} USD`
+                        document.getElementById("output_price1").innerHTML = `Bagaż podręczny: 0 USD`
+                    } else if (document.getElementById("currency").value == "chf") {
+                        document.getElementById("output_price").innerHTML = `Cena biletu: ${flight_price} PLN`
+                        document.getElementById("output_price1").innerHTML = `Bagaż podręczny: 0 PLN`
+                    }
+                })
+        })
+
         resolve()
     })
 }
 
 const testtest = () => {
     return new Promise((resolve, reject) => {
-        alert("doszło 1")
-        resolve()
-    })
-}
-
-const testtest1 = () => {
-    return new Promise((resolve, reject) => {
-        alert("doszło 2")
+        // alert("doszło 1")
         resolve()
     })
 }
@@ -300,5 +302,4 @@ function makeFly() {
         .catch(login_error)
         .then(login_btn)
         .then(testtest)
-        .then(testtest1)
 }
