@@ -242,7 +242,25 @@ const login_error = () => {
     })
 }
 
-const login_btn = (flight_price) => {
+const seats_chooser = (flight_price) => {
+    return new Promise((resolve, reject) => {
+        document.querySelector(".results").innerHTML = `<table id="table-flight1"><tr><td>Wybór bagażu dodatkowego</td> <td>+${flight_price*0.05} PLN za osobę</td> <td></td> <td></td> <td></td></tr><tr><td><label for="adults">Liczba osób</label>
+        <select name="luggage_qty" id="luggage_qty" required>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        </select></td> <td></td> <td></td> <td></td> <td><input type="button" id="abcd1" value="DALEJ"/></td></tr></table>`
+        document.getElementById("abcd1").addEventListener("click", () => {
+            alert("aaa")
+            resolve(flight_price)
+        })
+
+    })
+}
+
+
+const seats_selector = (flight_price) => {
     return new Promise((resolve, reject) => {
         document.querySelector(".results").innerHTML = `<select name="currency" id="currency" class="currencySelect">
                 <option value="" disabled selected>Wybierz walutę:</option>
@@ -251,7 +269,7 @@ const login_btn = (flight_price) => {
                 <option value="usd" selected>USD</option></select>
                 <a id="output_price">Cena biletu: ${flight_price} PLN </a>
                 <a id="output_price1">Bagaż podręczny: 0 PLN </a>
-                <a id="output_price2">Bagaż dodatkowy: X </a>`
+                <a id="output_price2">Bagaż dodatkowy: +${(flight_price * 0.05).toFixed(0)} PLN <input type="checkbox" id="additional_b" checked></a>`
         currency.addEventListener("change", function() {
             fetch(`http://api.nbp.pl/api/exchangerates/rates/a/${document.getElementById("currency").value}/?format=json`)
                 .then((resp) => resp.json())
@@ -259,12 +277,15 @@ const login_btn = (flight_price) => {
                     if (document.getElementById("currency").value == "eur") {
                         document.getElementById("output_price").innerHTML = `Cena biletu: ${(flight_price / data.rates[0].mid.toFixed(2)).toFixed(0)} EUR`
                         document.getElementById("output_price1").innerHTML = `Bagaż podręczny: 0 EUR`
+                        document.getElementById("output_price2").innerHTML = `Bagaż dodatkowy: +${((flight_price / data.rates[0].mid.toFixed(2)).toFixed(0)*0.05).toFixed(0)} EUR <input type="checkbox" id="additional_b" checked></a>`
                     } else if (document.getElementById("currency").value == "usd") {
                         document.getElementById("output_price").innerHTML = `Cena biletu: ${(flight_price / data.rates[0].mid.toFixed(2)).toFixed(0)} USD`
                         document.getElementById("output_price1").innerHTML = `Bagaż podręczny: 0 USD`
+                        document.getElementById("output_price2").innerHTML = `Bagaż dodatkowy: +${((flight_price / data.rates[0].mid.toFixed(2)).toFixed(0)*0.05).toFixed(0)} USD <input type="checkbox" id="additional_b" checked></a>`
                     } else if (document.getElementById("currency").value == "chf") {
                         document.getElementById("output_price").innerHTML = `Cena biletu: ${flight_price} PLN`
                         document.getElementById("output_price1").innerHTML = `Bagaż podręczny: 0 PLN`
+                        document.getElementById("output_price2").innerHTML = `Bagaż dodatkowy: +${(flight_price * 0.05).toFixed(0)} PLN <input type="checkbox" id="additional_b" checked></a>`
                     }
                 })
         })
@@ -300,6 +321,7 @@ function makeFly() {
         .then(put_flight)
         .then(confirm_flight_and_login)
         .catch(login_error)
-        .then(login_btn)
+        .then(seats_chooser)
+        .then(seats_selector)
         .then(testtest)
 }
