@@ -244,13 +244,27 @@ const login_error = () => {
 
 const seats_chooser = (flight_price) => {
     return new Promise((resolve, reject) => {
-        document.querySelector(".results").innerHTML = `<table id="table-flight1"><tr><td>Wybór bagażu dodatkowego</td> <td>+${flight_price*0.05} PLN za osobę</td> <td></td> <td></td> <td></td></tr><tr><td><label for="adults">Liczba osób</label>
-        <select name="luggage_qty" id="luggage_qty" required>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        </select></td> <td></td> <td></td> <td></td> <td><input type="button" id="abcd1" value="DALEJ"/></td></tr></table>`
+        document.querySelector(".results").innerHTML = `<table id="table-flight1"><tr><td>Wybór bagażu dodatkowego</td> <td>+${flight_price*0.05} PLN za osobę</td> <td></td> <td></td> <td></td></tr><tr><td id="rrr"></td> <td></td> <td></td> <td></td> <td><input type="button" id="abcd1" value="DALEJ"/></td></tr></table>`
+        document.getElementById("rrr").innerHTML = `<div id=testtest></div>`
+
+        let kkk = document.createElement('label')
+        document.getElementById("testtest").appendChild(kkk)
+        kkk.setAttribute("id", `luggage1`);
+        kkk.setAttribute("for", `luggage`);
+        document.getElementById("luggage1").innerText = "Liczba osób"
+        let ggg = document.createElement('select')
+        document.getElementById("testtest").appendChild(ggg)
+        ggg.setAttribute("id", `diva`);
+        ggg.setAttribute("name", `luggage`);
+
+
+        for (let l = 0; l <= document.getElementById("adults").value; l++) {
+            let hhh = document.createElement('option')
+            hhh.innerText = `${l}`
+            document.getElementById(`diva`).appendChild(hhh)
+            hhh.setAttribute("value", `${l}`);
+        }
+
         document.getElementById("abcd1").addEventListener("click", () => {
             alert("aaa")
             resolve(flight_price)
