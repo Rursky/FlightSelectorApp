@@ -119,7 +119,7 @@ nav a:hover {
 /* SECTION */
 
 section {
-    height: 400px;
+    height: 450px;
     width: 100%;
 }
 
@@ -407,8 +407,29 @@ td input:hover {
 
 // lista osoba bagażu
 #luggage1,
-#diva {
+#pSelect {
+    width: 80px;
+    margin-left: 10%;
+}
+
+#currency {
+    display: inline-block;
     width: 100px;
+    margin-left: 5%;
+}
+
+// wybór miejsc
+.color {
+    background-color: red;
+    color: yellow;
+}
+
+svg {
+    display: block;
+    align-items: center;
+    justify-content: center;
+    justify-items: center;
+    align-content: center;
 }
 
 
