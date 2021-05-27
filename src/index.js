@@ -166,15 +166,31 @@ const valid_data = () => { // obsługa braku wyboru w formularzu tj zostawienie 
     })
 }
 
+// const valid_date_put_weather = () => { // obsługa błędu wyboru daty wcześniejszej niż aktualna oraz dodanie "widgetu" pogody dla miasta wylotu (1 miasto w aplikacji, lecz konstrukcja promisa do obsługi wielu)
+//     return new Promise((resolve, reject) => {
+//         if (document.getElementById("leave-date").value < today) {
+//             alert("Wybierz aktualną datę.")
+//         } else {
+//             fetch(`https:api.openweathermap.org/data/2.5/forecast?q=${document.getElementById("town1").value}&appid=3865d70b9f135bc376b8beb376bb474b`)
+//                 .then(resp => resp.json())
+//                 .then(data => {
+//                     document.getElementById("weather-text").innerText = `${document.getElementById("town1").value}: ${((data.list[0].main.temp)-273.15).toFixed(0)}°c`
+//                     document.getElementById("weather-text").classList.add("weather-text1")
+//                     resolve()
+//                 })
+//         }
+//     })
+// }
+
 const valid_date_put_weather = () => { // obsługa błędu wyboru daty wcześniejszej niż aktualna oraz dodanie "widgetu" pogody dla miasta wylotu (1 miasto w aplikacji, lecz konstrukcja promisa do obsługi wielu)
     return new Promise((resolve, reject) => {
         if (document.getElementById("leave-date").value < today) {
             alert("Wybierz aktualną datę.")
         } else {
-            fetch(`https:api.openweathermap.org/data/2.5/forecast?q=${document.getElementById("town1").value}&appid=3865d70b9f135bc376b8beb376bb474b`)
+            fetch(`https://api.weatherapi.com/v1/current.json?key=0e023a9d7d024767ab084102212705&q=${document.getElementById("town1").value}&aqi=no`)
                 .then(resp => resp.json())
                 .then(data => {
-                    document.getElementById("weather-text").innerText = `${document.getElementById("town1").value}: ${((data.list[0].main.temp)-273.15).toFixed(0)}°c`
+                    document.getElementById("weather-text").innerText = `${document.getElementById("town1").value}: ${((data.current.temp_c)).toFixed(0)}°c`
                     document.getElementById("weather-text").classList.add("weather-text1")
                     resolve()
                 })
@@ -259,7 +275,7 @@ const seats_selector = (flight_price) => {
         ]
         for (let i = 0; i < seats.length; i++) {
             seats[i].addEventListener("click", () => {
-                if (k < 4) {
+                if (k < document.getElementById("adults").value) {
                     seats[i].style = "";
                     seats[i].classList = "";
                     seats[i].classList.add("color");
@@ -272,6 +288,7 @@ const seats_selector = (flight_price) => {
         }
     })
 }
+
 
 let luggage_person_qty = ""
 
@@ -314,12 +331,16 @@ const flight_summary = (flight_price) => {
                 <option value="eur">EUR</option>
                 <option value="chf" selected>PLN</option>
                 <option value="usd" >USD</option></select>
+                <a><i class="fas fa-ticket-alt"></i></a>
                 <a id="output_price">Cena biletu: ${flight_price} PLN </a>
+                <a><i class="fas fa-suitcase-rolling"></i></a>
                 <a id="output_price1">Bagaż podręczny: 0 PLN </a>
+                <a><i class="fas fa-luggage-cart"></i></a>
                 <a id="output_price2">Bagaż dodatkowy: ${(flight_price*0.05*luggage_person_qty).toFixed(2)} PLN
+                <a><i class="fas fa-user-check"></i></a>
                 <a id="output_price">Zarezerwowane miejsca: ${seats_table}</a>`
         currency.addEventListener("change", function() {
-            fetch(`http://api.nbp.pl/api/exchangerates/rates/a/${document.getElementById("currency").value}/?format=json`)
+            fetch(`https://api.nbp.pl/api/exchangerates/rates/a/${document.getElementById("currency").value}/?format=json`)
                 .then((resp) => resp.json())
                 .then(function(data) {
                     if (document.getElementById("currency").value == "eur") {
