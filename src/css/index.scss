@@ -1,3 +1,34 @@
+/* GLOBAL */
+
+$bgColor: grey;
+$wrapperBgColor: lightgray;
+$detailsBgColor: crimson;
+$detailsTextColor: white;
+@mixin selectAndInputStyles {
+    border: 1px solid $bgColor;
+    outline: 1px;
+    background: $bgColor;
+    margin-top: 5px;
+    width: 80%;
+    padding: 5px;
+    height: 30px;
+    border-radius: 3px;
+    color: $detailsTextColor;
+    box-shadow: 6px 6px 10px -2px black;
+    option {
+        color: $detailsTextColor;
+        background-color: $detailsBgColor;
+    }
+}
+
+@mixin popups($Background, $Width, $Height, $Top) {
+    position: absolute;
+    background: $Background;
+    width: $Width;
+    height: $Height;
+    top: $Top;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -6,27 +37,7 @@
 }
 
 body {
-    background-color: grey;
-}
-
-// developer window for tests
-.developer_window {
-    display: none;
-    position: fixed;
-    border: 2px solid red;
-    z-index: 30;
-    p {
-        color: lightblue;
-    }
-}
-
-.showdevwindow {
-    display: block;
-}
-
-#devbtn {
-    position: fixed;
-    top: 45px;
+    background-color: $bgColor;
 }
 
 
@@ -35,8 +46,8 @@ body {
 #wrapper {
     max-width: 950px;
     margin: 0 auto;
-    background-color: lightgray;
-    border: 1px solid white;
+    background-color: $wrapperBgColor;
+    border: 1px solid $detailsTextColor;
     border-radius: 10px;
 }
 
@@ -45,12 +56,11 @@ body {
 
 header {
     position: relative;
-}
-
-header img {
-    display: block;
-    width: 100%;
-    border-radius: 10px 10px 0px 0px;
+    img {
+        display: block;
+        width: 100%;
+        border-radius: 10px 10px 0px 0px;
+    }
 }
 
 #weather-text {
@@ -58,16 +68,15 @@ header img {
     bottom: 0px;
     font-size: 24px;
     padding-left: 5px;
-    background-color: grey;
-    color: white;
+    background-color: $bgColor;
+    color: $detailsTextColor;
     width: 25%;
     text-align: center;
-    /* border: 1px solid crimson; */
     border-top-left-radius: 19px;
     border-top-right-radius: 19px;
 }
 
-.weather-text1 {
+.weather-text-inputed {
     animation-name: driveII;
     animation-duration: 1s;
     /* czas trwania animacji */
@@ -91,28 +100,26 @@ header img {
 /* NAV MENU */
 
 .active {
-    background-color: crimson;
+    background-color: $detailsBgColor;
 }
 
 nav {
     overflow: hidden;
-}
-
-nav a {
-    display: block;
-    width: 25%;
-    float: left;
-    color: white;
-    text-align: center;
-    text-decoration: none;
-    background-color: grey;
-    padding: 15px 10px;
-    transition: all 1s ease;
-}
-
-nav a:hover {
-    background-color: crimson;
-    cursor: pointer;
+    a {
+        display: block;
+        width: 25%;
+        float: left;
+        color: $detailsTextColor;
+        text-align: center;
+        text-decoration: none;
+        background-color: $bgColor;
+        padding: 15px 10px;
+        transition: all 1s ease;
+        &:hover {
+            background-color: $detailsBgColor;
+            cursor: pointer;
+        }
+    }
 }
 
 
@@ -121,6 +128,17 @@ nav a:hover {
 section {
     height: 450px;
     width: 100%;
+    content {
+        margin-top: 40px;
+        margin-bottom: 20px;
+        a,
+        p {
+            text-align: center;
+            display: block;
+            padding: 10px 20px;
+            margin-top: 5px;
+        }
+    }
 }
 
 
@@ -128,27 +146,11 @@ section {
 
 footer {
     height: 40px;
-    background-color: grey;
-    color: white;
+    background-color: $bgColor;
+    color: $detailsTextColor;
     text-align: center;
     line-height: 40px;
     border-radius: 0px 0px 10px 10px;
-}
-
-
-/* kontakt.html */
-
-article {
-    margin-top: 40px;
-    margin-bottom: 20px;
-}
-
-article p,
-article a {
-    text-align: center;
-    display: block;
-    padding: 10px 20px;
-    margin-top: 5px;
 }
 
 
@@ -157,121 +159,97 @@ article a {
 .selektor {
     width: 30%;
     height: 90%;
-    border-right: 1px solid grey;
+    border-right: 1px solid $bgColor;
     padding-left: 40px;
     display: block;
     float: left;
     margin-bottom: 30px;
+    input {
+        @include selectAndInputStyles()
+    }
 }
 
-select,
-.selektor input {
-    border: 1px solid grey;
-    outline: 1px;
-    background: grey;
-    margin-top: 5px;
-    width: 80%;
-    padding: 5px;
-    height: 30px;
-    border-radius: 3px;
-    color: white;
-    box-shadow: 6px 6px 10px -2px black;
+select {
+    @include selectAndInputStyles()
 }
 
 label {
     display: block;
-    color: crimson;
+    color: $detailsBgColor;
     font-size: .9em;
     margin-top: 5px;
 }
 
 #search-flight {
-    background: grey;
-    color: white;
+    background: $bgColor;
+    color: $detailsTextColor;
     padding-top: 5px;
     margin-top: 40px;
     width: 80%;
     font-size: 1.2em;
-    /* display: flex; */
     justify-content: center;
     cursor: pointer;
     border-radius: 10px;
     transition: all 1s ease;
-}
-
-#search-flight:hover {
-    background: crimson;
-    border-radius: 10px;
-}
-
-select option {
-    color: white;
-    background-color: crimson;
+    &:hover {
+        background: $detailsBgColor;
+        border-radius: 10px;
+    }
 }
 
 
-/* Results */
+/* RESULTS */
 
 .results {
     width: 70%;
     display: block;
     float: left;
-}
-
-table {
-    width: 100%;
-    padding: 2%;
-    text-align: center;
-    margin-top: 15px;
-}
-
-td {
-    width: 20%;
-    color: black;
-    /* border: 1px solid black; */
-    padding-top: 10px;
-    padding-bottom: 10px;
-    margin-bottom: 20px;
-    display: block;
-    float: left;
-}
-
-td input {
-    background: grey;
-    color: white;
-    width: 100%;
-    font-size: 1.2em;
-    padding: 5px;
-    /* display: flex; */
-    justify-content: center;
-    cursor: pointer;
-    border-radius: 10px;
-    transition: all 1s ease;
-    border: none;
-}
-
-td input:hover {
-    background: crimson;
-    border-radius: 10px;
-}
-
-#form-icon {
-    font-size: 80px;
+    #form-icon {
+        font-size: 80px;
+    }
+    table {
+        width: 100%;
+        padding: 2%;
+        text-align: center;
+        margin-top: 15px;
+        td {
+            width: 20%;
+            color: black;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            display: block;
+            float: left;
+            input {
+                background: $bgColor;
+                color: $detailsTextColor;
+                width: 100%;
+                font-size: 1.2em;
+                padding: 5px;
+                justify-content: center;
+                cursor: pointer;
+                border-radius: 10px;
+                transition: all 1s ease;
+                border: none;
+                &:hover {
+                    background: $detailsBgColor;
+                    border-radius: 10px;
+                }
+            }
+        }
+    }
 }
 
 
-/* LOADING LOTÓW ANIMACJA */
+/* FLIGHT LOADING ANIMATION */
 
 #loading {
     font-size: 50px;
     padding-top: 20%;
     animation-name: driveI;
     animation-duration: 0.7s;
-    /* czas trwania animacji */
-    /* animation-fill-mode: forwards; */
     animation-timing-function: ease;
     animation-delay: 0s;
-    /*opóźnia start animacji*/
     animation-iteration-count: 4;
     font-size: 15px;
 }
@@ -287,7 +265,7 @@ td input:hover {
 
 // wyniki wyszukiwania
 #table-flight1 {
-    border: 1px solid crimson;
+    border: 1px solid $detailsBgColor;
     margin: 5px;
     padding: 0px;
     width: 99%;
@@ -296,34 +274,80 @@ td input:hover {
 }
 
 // wyniki wyszukiwania czesc 2
-#testtest {
+#personSelect {
     width: 30%;
     text-align: center;
 }
 
-#testtest p,
-#testtest select {
-    // justify-content: center;
-    // align-items: center;
-    // align-content: center;
-    // text-align: center;
-}
 
-
-/* popup (NIE RUSZAĆ - UKOŃCZONE) */
+/* POPUP */
 
 .popup {
-    position: absolute;
-    top: -150%;
+    @include popups(#f5f5f5, 300px, 440px, -150%);
     left: 50%;
     transform: translate(-50%, -50%) scale(1.15);
-    width: 300px;
-    height: 440px;
-    background: #f5f5f5;
     z-index: 2;
     opacity: 0;
     box-shadow: 5px 5px 3px rgba(0, 0, 0, 0.2);
     transition: transform 300ms ease-in-out, opacity 300ms ease-in-out;
+    .popup-close {
+        @include popups(#555, 40px, 40px, -10px);
+        right: -10px;
+        color: #f5f5f5;
+        font-size: 25px;
+        font-weight: 600;
+        text-align: center;
+        border-radius: 50%;
+        cursor: pointer;
+    }
+    .form {
+        .popup-avatar {
+            margin: 30px 0px 20px;
+            text-align: center;
+            img {
+                width: 120px;
+            }
+        }
+        .popup-header {
+            text-align: center;
+            font-size: 20px;
+            font-weight: 600;
+            color: #222;
+            margin: 20px 0px;
+        }
+        .popup-element {
+            padding: 8px 20px;
+            label {
+                display: block;
+                font-size: 14px;
+                color: #222;
+                margin-bottom: 5px;
+            }
+            input {
+                width: 100%;
+                padding: 8px 10px;
+                box-sizing: border-box;
+                outline: none;
+                border: 1px solid #aaa;
+                background: #eee;
+                border-radius: 5px;
+            }
+            button {
+                margin-top: 5px;
+                width: 100%;
+                padding: 10px 0px;
+                text-transform: uppercase;
+                outline: none;
+                border: none;
+                font-size: 15px;
+                font-weight: 600;
+                border-radius: 5px;
+                cursor: pointer;
+                background: $detailsBgColor;
+                color: #f5f5f5;
+            }
+        }
+    }
 }
 
 .showpopup {
@@ -332,77 +356,8 @@ td input:hover {
     transform: translate(-50%, -50%) scale(1);
 }
 
-.popup .popup-close {
-    position: absolute;
-    top: -10px;
-    right: -10px;
-    width: 40px;
-    height: 40px;
-    background: #555;
-    color: #f5f5f5;
-    font-size: 25px;
-    font-weight: 600;
-    text-align: center;
-    border-radius: 50%;
-    cursor: pointer;
-}
-
-.popup .form .popup-avatar {
-    margin: 30px 0px 20px;
-    text-align: center;
-}
-
-.popup .form .popup-avatar img {
-    width: 120px;
-    // border-radius: 20%;
-}
-
-.popup .form .popup-header {
-    text-align: center;
-    font-size: 20px;
-    font-weight: 600;
-    color: #222;
-    margin: 20px 0px;
-}
-
-.popup .form .popup-element {
-    padding: 8px 20px;
-}
-
-.popup .form .popup-element label {
-    display: block;
-    font-size: 14px;
-    color: #222;
-    margin-bottom: 5px;
-}
-
-.popup .form .popup-element input {
-    width: 100%;
-    padding: 8px 10px;
-    box-sizing: border-box;
-    outline: none;
-    border: 1px solid #aaa;
-    background: #eee;
-    border-radius: 5px;
-}
-
 .wrongpassword {
     border: 1px solid red !important;
-}
-
-.popup .form .popup-element button {
-    margin-top: 5px;
-    width: 100%;
-    padding: 10px 0px;
-    text-transform: uppercase;
-    outline: none;
-    border: none;
-    font-size: 15px;
-    font-weight: 600;
-    border-radius: 5px;
-    cursor: pointer;
-    background: crimson;
-    color: #f5f5f5;
 }
 
 // lista osoba bagażu
@@ -416,20 +371,6 @@ td input:hover {
     display: inline-block;
     width: 100px;
     margin-left: 5%;
-}
-
-// wybór miejsc
-.color {
-    background-color: red;
-    color: yellow;
-}
-
-svg {
-    display: block;
-    align-items: center;
-    justify-content: center;
-    justify-items: center;
-    align-content: center;
 }
 
 
@@ -461,11 +402,10 @@ svg {
         position: fixed;
         top: 0px;
         width: 100%;
-        border-bottom: 1px solid white;
+        border-bottom: 1px solid $detailsTextColor;
         border-radius: 10px 10px 0px 0px;
     }
     header {
-        // display: none;
         top: 26px;
     }
     header img {

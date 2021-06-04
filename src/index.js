@@ -1,29 +1,5 @@
 import style from "./css/index.scss";
 
-
-
-/////////////// Developer window
-
-// document.querySelector("#devbtn").addEventListener("click", () => {
-//     if (document.querySelector(".developer_window").classList.contains("showdevwindow")) {
-//         document.querySelector(".developer_window").classList.remove("showdevwindow")
-//     } else {
-//         document.querySelector(".developer_window").classList.add("showdevwindow")
-//     }
-// })
-
-// document.getElementById("testbtn").addEventListener("click", () => {
-//     alert(user_verification)
-// });
-
-// document.getElementById("testbtn1").addEventListener("click", () => {
-//     alert(user1)
-// })
-
-// document.getElementById("testbtn2").addEventListener("click", () => {
-//     alert(password1)
-// })
-
 //////////////// Obsługa rejestracji
 
 document.getElementById("register").addEventListener("click", () => {
@@ -104,7 +80,7 @@ var yyyy = today.getFullYear();
 
 today = yyyy + '-' + mm + '-' + dd;
 
-///////////////// Obsługa zaloguj - event listener
+///////////////// Obsługa logowania
 
 let login_valid_inner = false
 let login_valid = false
@@ -166,22 +142,6 @@ const valid_data = () => { // obsługa braku wyboru w formularzu tj zostawienie 
     })
 }
 
-// const valid_date_put_weather = () => { // obsługa błędu wyboru daty wcześniejszej niż aktualna oraz dodanie "widgetu" pogody dla miasta wylotu (1 miasto w aplikacji, lecz konstrukcja promisa do obsługi wielu)
-//     return new Promise((resolve, reject) => {
-//         if (document.getElementById("leave-date").value < today) {
-//             alert("Wybierz aktualną datę.")
-//         } else {
-//             fetch(`https:api.openweathermap.org/data/2.5/forecast?q=${document.getElementById("town1").value}&appid=3865d70b9f135bc376b8beb376bb474b`)
-//                 .then(resp => resp.json())
-//                 .then(data => {
-//                     document.getElementById("weather-text").innerText = `${document.getElementById("town1").value}: ${((data.list[0].main.temp)-273.15).toFixed(0)}°c`
-//                     document.getElementById("weather-text").classList.add("weather-text1")
-//                     resolve()
-//                 })
-//         }
-//     })
-// }
-
 const valid_date_put_weather = () => { // obsługa błędu wyboru daty wcześniejszej niż aktualna oraz dodanie "widgetu" pogody dla miasta wylotu (1 miasto w aplikacji, lecz konstrukcja promisa do obsługi wielu)
     return new Promise((resolve, reject) => {
         if (document.getElementById("leave-date").value < today) {
@@ -191,7 +151,7 @@ const valid_date_put_weather = () => { // obsługa błędu wyboru daty wcześnie
                 .then(resp => resp.json())
                 .then(data => {
                     document.getElementById("weather-text").innerText = `${document.getElementById("town1").value}: ${((data.current.temp_c)).toFixed(0)}°c`
-                    document.getElementById("weather-text").classList.add("weather-text1")
+                    document.getElementById("weather-text").classList.add("weather-text-inputed")
                     resolve()
                 })
         }
@@ -230,7 +190,7 @@ const put_flight = () => {
                     if (data.Carriers[0] == undefined) { // jeżeli w tym dniu nie bedzie lotu APi nie wygeneruje data.Carriers[0] i pokaże komunikat
                         document.querySelector(".results").innerHTML = `<p>Nie znaleziono lotu w tym dniu. Wybierz inną datę.</p>`
                     } else {
-                        document.querySelector(".results").innerHTML = `<table id="table-flight1"><tr><td>Z > Do</td> <td>Przewoźnik</td> <td>Wylot > Przylot</td> <td>Cena(${document.getElementById("adults").value} osób)</td> <td>Bilet</td></tr><tr><td>${document.getElementById("town1").value}<br>v<br>${document.getElementById("town2").value}</td> <td>${data.Carriers[0].Name}</td> <td>8:23 <br>v<br> 9:27</td> <td>${data.Quotes[0].MinPrice *document.getElementById("adults").value} PLN</td> <td><input type="button" id="abcd" value="KUP"/></td></tr></table>`
+                        document.querySelector(".results").innerHTML = `<table id="table-flight1"><tr><td>Z > Do</td> <td>Przewoźnik</td> <td>Wylot > Przylot</td> <td>Cena(${document.getElementById("adults").value} osób)</td> <td>Bilet</td></tr><tr><td>${document.getElementById("town1").value}<br>v<br>${document.getElementById("town2").value}</td> <td>${data.Carriers[0].Name}</td> <td>8:23 <br>v<br> 9:27</td> <td>${data.Quotes[0].MinPrice *document.getElementById("adults").value} PLN</td> <td><input type="button" id="buyButton" value="KUP"/></td></tr></table>`
                         const flight_price = data.Quotes[0].MinPrice * document.getElementById("adults").value
                         resolve(flight_price)
                     }
@@ -241,7 +201,7 @@ const put_flight = () => {
 
 const confirm_flight_and_login = (flight_price) => {
     return new Promise((resolve, reject) => {
-        document.getElementById("abcd").addEventListener("click", () => {
+        document.getElementById("buyButton").addEventListener("click", () => {
             if (login_valid == false) {
                 reject()
             } else if (login_valid == true) {
@@ -294,16 +254,16 @@ let luggage_person_qty = ""
 
 const luggage_chooser = (flight_price) => {
     return new Promise((resolve, reject) => {
-        document.querySelector(".results").innerHTML = `<table id="table-flight1"><tr><td>Wybór bagażu dodatkowego</td> <td></td> <td></td> <td>Cena biletów</td> <td></td></tr><tr><td id="table_1"></td> <td>+${(flight_price*0.05).toFixed(1)} PLN za osobę</td> <td></td> <td>${flight_price} PLN</td> <td><input type="button" id="abcd1" value="DALEJ"/></td></tr></table>`
-        document.getElementById("table_1").innerHTML = `<div id=testtest></div>`
+        document.querySelector(".results").innerHTML = `<table id="table-flight1"><tr><td>Wybór bagażu dodatkowego</td> <td></td> <td></td> <td>Cena biletów</td> <td></td></tr><tr><td id="table_1"></td> <td>+${(flight_price*0.05).toFixed(1)} PLN za osobę</td> <td></td> <td>${flight_price} PLN</td> <td><input type="button" id="forwardButton" value="DALEJ"/></td></tr></table>`
+        document.getElementById("table_1").innerHTML = `<div id=personSelect></div>`
 
         let person_label = document.createElement('label')
-        document.getElementById("testtest").appendChild(person_label)
+        document.getElementById("personSelect").appendChild(person_label)
         person_label.setAttribute("id", `luggage1`);
         person_label.setAttribute("for", `luggage`);
         document.getElementById("luggage1").innerText = "Liczba osób"
         let person_select = document.createElement('select')
-        document.getElementById("testtest").appendChild(person_select)
+        document.getElementById("personSelect").appendChild(person_select)
         person_select.setAttribute("id", `pSelect`);
         person_select.setAttribute("name", `luggage`);
 
@@ -315,7 +275,7 @@ const luggage_chooser = (flight_price) => {
             hhh.setAttribute("value", `${l}`);
         }
 
-        document.getElementById("abcd1").addEventListener("click", () => {
+        document.getElementById("forwardButton").addEventListener("click", () => {
             luggage_person_qty = document.getElementById("pSelect").value
             resolve(flight_price)
         })
