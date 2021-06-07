@@ -4,7 +4,12 @@ $bgColor: grey;
 $wrapperBgColor: lightgray;
 $detailsBgColor: crimson;
 $detailsTextColor: white;
+$buttonsAndInputsRadius: 10px;
 @mixin selectAndInputStyles {
+    display: grid;
+    place-items: center;
+    align-items: center;
+    justify-content: center;
     border: 1px solid $bgColor;
     outline: 1px;
     background: $bgColor;
@@ -12,7 +17,7 @@ $detailsTextColor: white;
     width: 80%;
     padding: 5px;
     height: 30px;
-    border-radius: 3px;
+    border-radius: $buttonsAndInputsRadius;
     color: $detailsTextColor;
     box-shadow: 6px 6px 10px -2px black;
     option {
@@ -160,10 +165,14 @@ footer {
     width: 30%;
     height: 90%;
     border-right: 1px solid $bgColor;
-    padding-left: 40px;
-    display: block;
+    padding-left: 5%;
+    display: grid;
+    place-items: center;
     float: left;
     margin-bottom: 30px;
+    form {
+        min-width: 100%;
+    }
     input {
         @include selectAndInputStyles()
     }
@@ -189,7 +198,7 @@ label {
     font-size: 1.2em;
     justify-content: center;
     cursor: pointer;
-    border-radius: 10px;
+    border-radius: $buttonsAndInputsRadius;
     transition: all 1s ease;
     &:hover {
         background: $detailsBgColor;
@@ -202,8 +211,9 @@ label {
 
 .results {
     width: 70%;
-    display: block;
+    display: grid;
     float: left;
+    place-items: center;
     #form-icon {
         font-size: 80px;
     }
@@ -212,14 +222,18 @@ label {
         padding: 2%;
         text-align: center;
         margin-top: 15px;
+        font-size: 14px;
         td {
-            width: 20%;
+            width: 19%;
             color: black;
-            padding-top: 10px;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
+            padding: 10px;
+            margin: 0.5%;
+            border-radius: 20px;
+            // margin-bottom: 10px;
             display: block;
             float: left;
+            // border-left: solid 1px crimson;
+            border-bottom: solid 1px $bgColor;
             input {
                 background: $bgColor;
                 color: $detailsTextColor;
@@ -364,7 +378,7 @@ label {
 #luggage1,
 #pSelect {
     width: 80px;
-    margin-left: 10%;
+    margin-left: 13%;
 }
 
 #currency {
@@ -372,6 +386,10 @@ label {
     width: 100px;
     margin-left: 2%;
     margin-top: 5px;
+}
+
+#forwardButton {
+    margin-top: 25px;
 }
 
 
@@ -432,16 +450,26 @@ label {
         height: 200px
     }
     .selektor {
-        display: block;
         width: 100%;
-        height: 300px
+        height: 300px;
+        padding-left: 15%;
     }
     section {
-        height: 600px;
+        height: 750px;
         width: 100%;
+        margin-top: 30px;
     }
     #login {
         height: 27px;
         overflow: auto;
     }
+    tr {
+        font-size: 0.60em;
+        margin-top: 20px;
+    }
+    // td {
+    //     padding-top: 30px;
+    //     text-align: bottom;
+    //     height: 73px;
+    // }
 }

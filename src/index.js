@@ -302,7 +302,7 @@ const luggage_chooser = (flight_price) => {
 
 const flight_summary = (flight_price) => {
     return new Promise((resolve, reject) => {
-        document.querySelector(".results").innerHTML = `<select name="currency" id="currency" class="currencySelect">
+        document.querySelector(".results").innerHTML = `<p>Zmień walutę:<select name="currency" id="currency" class="currencySelect"></p>
                 <option value="" disabled selected>Wybierz walutę:</option>
                 <option value="eur">EUR</option>
                 <option value="chf" selected>PLN</option>
