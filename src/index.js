@@ -1,5 +1,37 @@
 import style from "./css/index.scss";
 
+///// -- GODZINY WYLOTU -- /////
+
+// const a = (Math.floor(Math.random() * (10 - 1)) + 1)
+// const b = Math.floor(Math.random() * (59 - 10)) + 10
+
+///// -- AKTUALNA DATA (do obsługi wyboru wcześniejszej daty niż dzisiajesza) -- /////
+
+let today = new Date();
+let dd = String(today.getDate()).padStart(2, '0');
+let mm = String(today.getMonth() + 1).padStart(2, '0');
+let yyyy = today.getFullYear();
+
+today = yyyy + '-' + mm + '-' + dd;
+
+///// -- OBSŁUGA POPUP'ÓW -- /////
+
+function openRegisterForm() {
+    document.querySelector("#popup-register").classList.add("showpopup")
+}
+
+function closeRegisterForm() {
+    document.querySelector("#popup-register").classList.remove("showpopup")
+}
+
+function openLoginForm() {
+    document.querySelector(".popup").classList.add("showpopup")
+}
+
+function closeLoginForm() {
+    document.querySelector(".popup").classList.remove("showpopup")
+}
+
 ///// -- OBSŁUGA REJESTRACJI -- /////
 
 document.getElementById("register").addEventListener("click", () => {
@@ -11,7 +43,7 @@ let user_verification = false
 document.getElementById("popup-register-btn").addEventListener("click", () => {
     for (let k = 0; k < 1; k++) {
         if (document.getElementById("username1").value == "" || document.getElementById("password1").value == "") {
-            alert("Żadne z pól nie moze byc puste.")
+            alert("Żadne z pól nie może być puste.")
         } else {
             for (let i = 0; i < user1.length; i++) {
                 if (document.getElementById("username1").value == user1[i]) {
@@ -33,7 +65,7 @@ document.getElementById("popup-register-btn").addEventListener("click", () => {
         password1.push(document.getElementById("password1").value)
         user_verification1 = false
         closeRegisterForm()
-        alert("Zarejestrowano Cię.")
+        alert("Rejestracja przebiegła pomyślnie!")
         document.getElementById("username1").value = "" // czyszczenie okienek username po zarejestrowniu
         document.getElementById("password1").value = "" // czyszczenie okienek password po zarejestrowaniu
     }
@@ -41,44 +73,10 @@ document.getElementById("popup-register-btn").addEventListener("click", () => {
 
 document.querySelector("#register-popup-close").addEventListener("click", closeRegisterForm)
 
-
 ///// -- DANE LOGOWANIA -- /////
 
-const user1 = ["tanieloty", "tanieloty1", "tanieloty2"]
-const password1 = ["admin", "admin1", "admin2"]
-
-
-///// -- OBSŁUGA POPUP'ÓW -- /////
-
-function openRegisterForm() {
-    document.querySelector("#popup-register").classList.add("showpopup")
-}
-
-function closeRegisterForm() {
-    document.querySelector("#popup-register").classList.remove("showpopup")
-}
-
-function openLoginForm() {
-    document.querySelector(".popup").classList.add("showpopup")
-}
-
-function closeLoginForm() {
-    document.querySelector(".popup").classList.remove("showpopup")
-}
-
-///// -- RANDOMOWE GODZINY WYLOTU -- /////
-
-// const a = (Math.floor(Math.random() * (10 - 1)) + 1)
-// const b = Math.floor(Math.random() * (59 - 10)) + 10
-
-///// -- AKTUALNA DATA (do obsługi wyboru wcześniejszej daty niż dzisiajesza) -- /////
-
-var today = new Date();
-var dd = String(today.getDate()).padStart(2, '0');
-var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-var yyyy = today.getFullYear();
-
-today = yyyy + '-' + mm + '-' + dd;
+const user1 = ["tanieloty", "tanieloty1", "tanieloty2", "marcin"]
+const password1 = ["admin", "admin1", "admin2", "dlubis"]
 
 ///// -- OBSŁUGA LOGOWANIA -- /////
 
@@ -128,7 +126,7 @@ document.getElementById("search-flight").addEventListener("click", makeFly)
 
 ///// -- OBSŁUGA WYBORU LOTU + WYMUSZANIE LOGOWANIA -- /////
 
-const valid_data = () => { // obsługa braku wyboru w formularzu tj zostawienie pustych okienek
+const valid_data = () => {
     return new Promise((resolve, reject) => {
         if (document.getElementById("town1").value == "") {
             alert("Podaj miasto wylotu.")
@@ -142,7 +140,7 @@ const valid_data = () => { // obsługa braku wyboru w formularzu tj zostawienie 
     })
 }
 
-const valid_date_put_weather = () => { // obsługa błędu wyboru daty wcześniejszej niż aktualna oraz dodanie "widgetu" pogody dla miasta wylotu (1 miasto w aplikacji, lecz konstrukcja promisa do obsługi wielu)
+const valid_date_put_weather = () => {
     return new Promise((resolve, reject) => {
         if (document.getElementById("leave-date").value < today) {
             alert("Wybierz aktualną datę.")
@@ -186,8 +184,8 @@ const put_flight = () => {
                         "x-rapidapi-host": "skyscanner-skyscanner-flight-search-v1.p.rapidapi.com"
                     }
                 })
-                .then((resp) => resp.json()) //mówimy, ze pobrane dane to JSON
-                .then(function(data) { //data = pobrane dane
+                .then((resp) => resp.json())
+                .then(function(data) {
                     console.log(data)
                     if (data.Carriers[0] == undefined) { // jeżeli w tym dniu nie bedzie lotu APi nie wygeneruje data.Carriers[0] i pokaże komunikat
                         document.querySelector(".results").innerHTML = `<p>Nie znaleziono lotu w tym dniu. Wybierz inną datę.</p>`
