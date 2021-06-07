@@ -5,24 +5,33 @@ $wrapperBgColor: lightgray;
 $detailsBgColor: crimson;
 $detailsTextColor: white;
 $buttonsAndInputsRadius: 10px;
-@mixin selectAndInputStyles {
+@mixin centerDisplay {
     display: grid;
     place-items: center;
+}
+
+@mixin onHoverStyle {
+    color: $detailsTextColor;
+    background-color: $detailsBgColor;
+    cursor: pointer;
+}
+
+@mixin selectAndInputStyles ($Width) {
+    @include centerDisplay();
     align-items: center;
     justify-content: center;
     border: 1px solid $bgColor;
     outline: 1px;
     background: $bgColor;
     margin-top: 5px;
-    width: 80%;
+    width: $Width;
     padding: 5px;
     height: 30px;
     border-radius: $buttonsAndInputsRadius;
     color: $detailsTextColor;
     box-shadow: 6px 6px 10px -2px black;
     option {
-        color: $detailsTextColor;
-        background-color: $detailsBgColor;
+        @include onHoverStyle();
     }
 }
 
@@ -131,7 +140,7 @@ nav {
 /* SECTION */
 
 section {
-    height: 450px;
+    height: 500px;
     width: 100%;
     content {
         margin-top: 40px;
@@ -162,24 +171,23 @@ footer {
 /* SELEKTOR */
 
 .selektor {
+    @include centerDisplay();
     width: 30%;
     height: 90%;
     border-right: 1px solid $bgColor;
     padding-left: 5%;
-    display: grid;
-    place-items: center;
     float: left;
     margin-bottom: 30px;
     form {
         min-width: 100%;
     }
     input {
-        @include selectAndInputStyles()
+        @include selectAndInputStyles(80%)
     }
 }
 
 select {
-    @include selectAndInputStyles()
+    @include selectAndInputStyles(80%)
 }
 
 label {
@@ -210,10 +218,9 @@ label {
 /* RESULTS */
 
 .results {
+    @include centerDisplay();
     width: 70%;
-    display: grid;
     float: left;
-    place-items: center;
     padding: 5px;
     #form-icon {
         font-size: 80px;
@@ -389,8 +396,24 @@ label {
     margin-top: 5px;
 }
 
+//wybór miejsc grafika
+#seatsForwardButton {
+    @include selectAndInputStyles(100%);
+    &:hover {
+        @include onHoverStyle();
+    }
+}
+
+//dodatkowy bagaż
 #forwardButton {
     margin-top: 25px;
+}
+
+#finalConfirmButton {
+    @include selectAndInputStyles(100%);
+    &:hover {
+        @include onHoverStyle();
+    }
 }
 
 
@@ -444,11 +467,9 @@ label {
     .selektor label {
         font-size: .75em;
     }
-    /// poniżej do poprawienia weersja mobilna
     .results {
-        display: block;
         width: 100%;
-        height: 200px
+        height: 210px
     }
     .selektor {
         width: 100%;
@@ -456,7 +477,7 @@ label {
         padding-left: 15%;
     }
     section {
-        height: 750px;
+        height: 800px;
         width: 100%;
         margin-top: 30px;
     }
