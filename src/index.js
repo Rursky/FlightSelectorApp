@@ -152,7 +152,7 @@ const valid_date_put_weather = () => { // obsługa błędu wyboru daty wcześnie
                 .then(data => {
                     document.getElementById("weather-text").innerText = `${document.getElementById("town1").value}: ${((data.current.temp_c)).toFixed(0)}°c`
                     document.getElementById("weather-text").classList.add("weather-text-inputed")
-                    k = 0 // reset miejsc
+                    k = 0 // reset licznika miejsc
                     seats_table = [] // reset miejsc
                     resolve()
                 })
@@ -192,7 +192,7 @@ const put_flight = () => {
                     if (data.Carriers[0] == undefined) { // jeżeli w tym dniu nie bedzie lotu APi nie wygeneruje data.Carriers[0] i pokaże komunikat
                         document.querySelector(".results").innerHTML = `<p>Nie znaleziono lotu w tym dniu. Wybierz inną datę.</p>`
                     } else {
-                        document.querySelector(".results").innerHTML = `<table id="table-flight1"><tr><td>Z > Do</td> <td>Przewoźnik</td> <td>Wylot > Przylot</td> <td>Cena(${document.getElementById("adults").value} osób)</td> <td>Bilet</td></tr><tr><td>${document.getElementById("town1").value}<br>v<br>${document.getElementById("town2").value}</td> <td>${data.Carriers[0].Name}</td> <td>8:23 <br>v<br> 9:27</td> <td>${data.Quotes[0].MinPrice *document.getElementById("adults").value} PLN</td> <td><input type="button" id="buyButton" value="KUP"/></td></tr></table>`
+                        document.querySelector(".results").innerHTML = `<table id="table-flight1"><tr><td>Z <i class="fas fa-arrow-right"></i> Do</td> <td>Przewoźnik</td> <td>Wylot <i class="fas fa-arrow-right"></i> Przylot</td> <td>Cena(${document.getElementById("adults").value} osób)</td> <td>Bilet</td></tr><tr><td>${document.getElementById("town1").value}<br><i class="fas fa-arrow-down"></i><br>${document.getElementById("town2").value}</td> <td>${data.Carriers[0].Name}</td> <td>8:23 <br><i class="fas fa-arrow-down"></i><br> 9:27</td> <td>${data.Quotes[0].MinPrice *document.getElementById("adults").value} PLN</td> <td><input type="button" id="buyButton" value="KUP"/></td></tr></table>`
                         const flight_price = data.Quotes[0].MinPrice * document.getElementById("adults").value
                         resolve(flight_price)
                     }
@@ -299,9 +299,12 @@ const luggage_chooser = (flight_price) => {
     })
 }
 
-
 const flight_summary = (flight_price) => {
     return new Promise((resolve, reject) => {
+        let date_today = new Date(today.split("-")); // różnica dat - wybranej od dzisiejszej
+        let date_leave = new Date(document.getElementById("leave-date").value.split("-"));
+        let timeDiff = Math.abs(date_leave.getTime() - date_today.getTime());
+        let diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
         document.querySelector(".results").innerHTML = `<p>Zmień walutę:<select name="currency" id="currency" class="currencySelect"></p>
                 <option value="" disabled selected>Wybierz walutę:</option>
                 <option value="eur">EUR</option>
@@ -314,7 +317,19 @@ const flight_summary = (flight_price) => {
                 <a><i class="fas fa-luggage-cart"></i></a>
                 <a id="output_price2">Bagaż dodatkowy: ${(flight_price*0.05*luggage_person_qty).toFixed(2)} PLN
                 <a><i class="fas fa-user-check"></i></a>
-                <a id="output_price">Zarezerwowane miejsca: ${seats_table}</a>`
+                <a id="output_price">Zarezerwowane miejsca: ${seats_table}</a>
+                <a id="results_icon"></a>
+                <a id="results_date"></a>`
+        if (diffDays < 5) {
+            fetch(`https:api.openweathermap.org/data/2.5/forecast?q=${document.getElementById("town1").value}&appid=3865d70b9f135bc376b8beb376bb474b`)
+                .then(resp => resp.json())
+                .then(data => {
+                    alert(diffDays)
+                    document.querySelector("#results_icon").innerHTML = '<i class="fas fa-sun"></i>'
+                    document.querySelector("#results_date").innerText = `Prognoza w dniu przylotu: ${((data.list[diffDays*3].main.temp)-273.15).toFixed(0)}°c`
+                    resolve()
+                })
+        };
         currency.addEventListener("change", function() {
             fetch(`https://api.nbp.pl/api/exchangerates/rates/a/${document.getElementById("currency").value}/?format=json`)
                 .then((resp) => resp.json())
