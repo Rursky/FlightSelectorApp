@@ -8,11 +8,33 @@ document.getElementById("contact").addEventListener("click", () => {
     }, 1000)
 })
 
-
 ///// -- GODZINY WYLOTU -- /////
 
-// const a = (Math.floor(Math.random() * (10 - 1)) + 1)
-// const b = Math.floor(Math.random() * (59 - 10)) + 10
+let f_hour = 0
+let f_minute = 0
+let start_time = new Date()
+let end_time = new Date()
+
+const start_time_generator = () => {
+    f_hour = Math.floor(Math.random() * (23 - 1 + 1)) + 1
+    f_minute = Math.floor(Math.random() * (59 - 10 + 1)) + 10
+    start_time.setHours(f_hour)
+    start_time.setMinutes(f_minute)
+}
+
+const end_time_generator = () => {
+    if (document.getElementById("town2").value == "Katowice") {
+        end_time.setHours(f_hour + 1)
+        end_time.setMinutes(f_minute + 10)
+    } else if (document.getElementById("town2").value == "Paryż") {
+        end_time.setHours(f_hour + 3)
+        end_time.setMinutes(f_minute + 25)
+    } else if (document.getElementById("town2").value == "Nowy Jork") {
+        end_time.setHours(f_hour + 8)
+        end_time.setMinutes(f_minute + 49)
+    }
+    return end_time
+}
 
 ///// -- AKTUALNA GODZINA LIVE + DATA (do obsługi wyboru wcześniejszej daty niż dzisiajesza) -- /////
 
@@ -149,6 +171,8 @@ document.getElementById("search-flight").addEventListener("click", makeFly)
 
 const valid_data = () => {
     return new Promise((resolve, reject) => {
+        start_time_generator()
+        end_time_generator()
         if (document.getElementById("town1").value == "") {
             alert("Podaj miasto wylotu.")
         } else if (document.getElementById("town2").value == "") {
@@ -211,7 +235,7 @@ const put_flight = () => {
                     if (data.Carriers[0] == undefined) { // jeżeli w tym dniu nie bedzie lotu APi nie wygeneruje data.Carriers[0] i pokaże komunikat
                         document.querySelector(".results").innerHTML = `<p>Nie znaleziono lotu w tym dniu. Wybierz inną datę.</p>`
                     } else {
-                        document.querySelector(".results").innerHTML = `<table id="table-flight1"><tr><td>Z <i class="fas fa-arrow-right"></i> Do</td> <td>Przewoźnik</td> <td>Wylot <i class="fas fa-arrow-right"></i> Przylot</td> <td>Cena(${document.getElementById("adults").value} osób)</td> <td>Bilet</td></tr><tr><td>${document.getElementById("town1").value}<br><i class="fas fa-arrow-down"></i><br>${document.getElementById("town2").value}</td> <td>${data.Carriers[0].Name}</td> <td>8:23 <br><i class="fas fa-arrow-down"></i><br> 9:27</td> <td>${data.Quotes[0].MinPrice *document.getElementById("adults").value} PLN</td> <td><input type="button" id="buyButton" value="KUP"/></td></tr></table>`
+                        document.querySelector(".results").innerHTML = `<table id="table-flight1"><tr><td>Z <i class="fas fa-arrow-right"></i> Do</td> <td>Przewoźnik</td> <td>Wylot <i class="fas fa-arrow-right"></i> Przylot</td> <td>Cena(${document.getElementById("adults").value} osób)</td> <td>Bilet</td></tr><tr><td>${document.getElementById("town1").value}<br><i class="fas fa-arrow-down"></i><br>${document.getElementById("town2").value}</td> <td>${data.Carriers[0].Name}</td> <td>${start_time.getHours()}:${start_time.getMinutes()} <br><i class="fas fa-arrow-down"></i><br> ${end_time.getHours()}:${end_time.getMinutes()}</td> <td>${data.Quotes[0].MinPrice *document.getElementById("adults").value} PLN</td> <td><input type="button" id="buyButton" value="KUP"/></td></tr></table>`
                         const flight_price = data.Quotes[0].MinPrice * document.getElementById("adults").value
                         resolve(flight_price)
                     }
@@ -296,9 +320,7 @@ let luggage_person_qty = ""
 
 const luggage_chooser = (flight_price) => {
     return new Promise((resolve, reject) => {
-        document.querySelector(".results").innerHTML = `<a id="table_1"></a> <a>+${(flight_price*0.05).toFixed(1)} PLN za osobę</a> <a>Cena biletów: ${flight_price} PLN</a> <a><input type="button" id="forwardButton" value="DALEJ"/></a>`
-        document.getElementById("table_1").innerHTML = `<div id=personSelect></div>`
-
+        document.querySelector(".results").innerHTML = `<a>Bagaż dodatkowy:</a><a><div id=personSelect></div></a> <a id=add_luggage_price>Koszt dodatkowego bagażu: 0 PLN</a> <a>Cena biletów: ${flight_price} PLN</a> <a><input type="button" id="forwardButton" value="DALEJ"/></a>`
         let person_label = document.createElement('label')
         document.getElementById("personSelect").appendChild(person_label)
         person_label.setAttribute("id", `luggage1`);
@@ -309,13 +331,16 @@ const luggage_chooser = (flight_price) => {
         person_select.setAttribute("id", `pSelect`);
         person_select.setAttribute("name", `luggage`);
 
-
         for (let l = 0; l <= document.getElementById("adults").value; l++) {
-            let hhh = document.createElement('option')
-            hhh.innerText = `${l}`
-            document.getElementById(`pSelect`).appendChild(hhh)
-            hhh.setAttribute("value", `${l}`);
+            let options_l = document.createElement('option')
+            options_l.innerText = `${l}`
+            document.getElementById(`pSelect`).appendChild(options_l)
+            options_l.setAttribute("value", `${l}`);
         }
+
+        document.getElementById("pSelect").addEventListener("change", () => {
+            document.getElementById("add_luggage_price").innerText = `Koszt dodatkowego bagażu: ${(flight_price*0.05*document.getElementById("pSelect").value).toFixed(1)} PLN`
+        })
 
         document.getElementById("forwardButton").addEventListener("click", () => {
             luggage_person_qty = document.getElementById("pSelect").value
