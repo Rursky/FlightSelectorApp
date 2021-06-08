@@ -43,6 +43,15 @@ $buttonsAndInputsRadius: 10px;
     top: $Top;
 }
 
+@mixin showAnimation {
+    animation-name: driveII;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+    animation-timing-function: ease;
+    animation-delay: 0s;
+    animation-iteration-count: 1;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -82,23 +91,13 @@ header {
     bottom: 0px;
     font-size: 24px;
     padding-left: 5px;
-    background-color: $bgColor;
     color: $detailsTextColor;
     width: 25%;
     text-align: center;
-    border-top-left-radius: 19px;
-    border-top-right-radius: 19px;
 }
 
 .weather-text-inputed {
-    animation-name: driveII;
-    animation-duration: 1s;
-    /* czas trwania animacji */
-    animation-fill-mode: forwards;
-    animation-timing-function: ease;
-    animation-delay: 0s;
-    /*opóźnia start animacji*/
-    animation-iteration-count: 1;
+    @include showAnimation();
 }
 
 @keyframes driveII {
@@ -165,6 +164,11 @@ footer {
     text-align: center;
     line-height: 40px;
     border-radius: 0px 0px 10px 10px;
+}
+
+.footer_active {
+    background: crimson;
+    @include showAnimation();
 }
 
 
@@ -237,11 +241,8 @@ label {
             padding: 10px;
             margin: 0.5%;
             border-radius: 20px;
-            // margin-bottom: 10px;
             display: block;
             float: left;
-            // border-left: solid 1px crimson;
-            border-bottom: solid 1px $bgColor;
             input {
                 background: $bgColor;
                 color: $detailsTextColor;
@@ -406,7 +407,10 @@ label {
 
 //dodatkowy bagaż
 #forwardButton {
-    margin-top: 25px;
+    @include selectAndInputStyles(100%);
+    &:hover {
+        @include onHoverStyle();
+    }
 }
 
 #finalConfirmButton {
@@ -466,8 +470,10 @@ label {
         border-radius: 0px 0px 0px 0px;
     }
     #weather-text {
-        font-size: 18px;
+        font-size: 25px;
         width: 100%;
+        text-align: right;
+        right: 5px;
     }
     #search-flight {
         font-size: 14px;

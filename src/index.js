@@ -1,5 +1,14 @@
 import style from "./css/index.scss";
 
+
+document.getElementById("contact").addEventListener("click", () => {
+    document.getElementById("footer").classList.add("footer_active")
+    setTimeout(() => {
+        document.getElementById("footer").classList.remove("footer_active")
+    }, 1000)
+})
+
+
 ///// -- GODZINY WYLOTU -- /////
 
 // const a = (Math.floor(Math.random() * (10 - 1)) + 1)
@@ -287,7 +296,7 @@ let luggage_person_qty = ""
 
 const luggage_chooser = (flight_price) => {
     return new Promise((resolve, reject) => {
-        document.querySelector(".results").innerHTML = `<table id="table-flight1"><tr><td>Wybór bagażu dodatkowego</td> <td></td> <td></td> <td>Cena biletów</td> <td></td></tr><tr><td id="table_1"></td> <td>+${(flight_price*0.05).toFixed(1)} PLN za osobę</td> <td></td> <td>${flight_price} PLN</td> <td><input type="button" id="forwardButton" value="DALEJ"/></td></tr></table>`
+        document.querySelector(".results").innerHTML = `<a id="table_1"></a> <a>+${(flight_price*0.05).toFixed(1)} PLN za osobę</a> <a>Cena biletów: ${flight_price} PLN</a> <a><input type="button" id="forwardButton" value="DALEJ"/></a>`
         document.getElementById("table_1").innerHTML = `<div id=personSelect></div>`
 
         let person_label = document.createElement('label')
