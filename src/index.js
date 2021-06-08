@@ -5,7 +5,7 @@ import style from "./css/index.scss";
 // const a = (Math.floor(Math.random() * (10 - 1)) + 1)
 // const b = Math.floor(Math.random() * (59 - 10)) + 10
 
-///// -- AKTUALNA DATA (do obsługi wyboru wcześniejszej daty niż dzisiajesza) -- /////
+///// -- AKTUALNA GODZINA LIVE + DATA (do obsługi wyboru wcześniejszej daty niż dzisiajesza) -- /////
 
 let today = new Date();
 let dd = String(today.getDate()).padStart(2, '0');
@@ -13,6 +13,18 @@ let mm = String(today.getMonth() + 1).padStart(2, '0');
 let yyyy = today.getFullYear();
 
 today = yyyy + '-' + mm + '-' + dd;
+
+function timeIs() {
+    let d = new Date();
+    let s = d.getSeconds();
+    let m = d.getMinutes();
+    let h = d.getHours();
+    let hourIs =
+        ("0" + h).substr(-2) + ":" + ("0" + m).substr(-2) + ":" + ("0" + s).substr(-2);
+    document.getElementById("time-text").innerHTML = `Godzina: ${hourIs} Data: ${today}`
+}
+
+setInterval(timeIs, 1000);
 
 ///// -- OBSŁUGA POPUP'ÓW -- /////
 

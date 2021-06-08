@@ -416,6 +416,17 @@ label {
     }
 }
 
+//czas live
+#time-text {
+    display: inline-block;
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    width: 100%;
+    color: white;
+    text-align: right;
+}
+
 
 /* MEDIA QUERIES */
 
@@ -488,5 +499,11 @@ label {
     tr {
         font-size: 0.80em;
         margin-top: 20px;
+    }
+    svg {
+        max-width: 350px;
+    }
+    #time-text {
+        top: 5px;
     }
 }
