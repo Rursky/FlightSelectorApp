@@ -23,7 +23,6 @@ $buttonsAndInputsRadius: 10px;
     border: 1px solid $bgColor;
     outline: 1px;
     background: $bgColor;
-    margin-top: 5px;
     width: $Width;
     padding: 5px;
     height: 30px;
@@ -167,7 +166,7 @@ footer {
 }
 
 .footer_active {
-    background: crimson;
+    background: $detailsBgColor;
     @include showAnimation();
 }
 
@@ -202,20 +201,11 @@ label {
 }
 
 #search-flight {
-    background: $bgColor;
-    color: $detailsTextColor;
-    padding-top: 5px;
-    margin-top: 40px;
-    width: 80%;
-    font-size: 1.2em;
-    justify-content: center;
-    cursor: pointer;
-    border-radius: $buttonsAndInputsRadius;
-    transition: all 1s ease;
+    @include selectAndInputStyles(80%);
     &:hover {
-        background: $detailsBgColor;
-        border-radius: 10px;
+        @include onHoverStyle();
     }
+    margin-top: 40px;
 }
 
 
@@ -367,7 +357,7 @@ label {
                 border-radius: 5px;
                 cursor: pointer;
                 background: $detailsBgColor;
-                color: #f5f5f5;
+                color: $detailsTextColor;
             }
         }
     }
