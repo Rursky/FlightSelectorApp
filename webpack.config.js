@@ -25,8 +25,13 @@ module.exports = {
                         options: { outputPath: '/', name: '[name].css' }
                     },
                     'sass-loader'
-                ]
+                ],
+                use: ["style-loader", "css-loader", "sass-loader"]
             },
+            // {
+            //     test: /\.scss$/,
+            //     use: ["style-loader", "css-loader", "sass-loader"]
+            // },
             {
                 test: /\.js$/,
                 exclude: /node_modules/,
